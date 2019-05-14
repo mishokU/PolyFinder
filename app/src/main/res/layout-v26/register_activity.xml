@@ -25,7 +25,7 @@
                 android:layout_marginTop="60dp"
                 app:srcCompat="@drawable/logo" />
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -36,13 +36,13 @@
                 android:hint="@string/email"
                 android:paddingStart="25dp"
                 android:paddingEnd="10dp"
-                android:textColor="@color/edit_text"
+                android:textColor="@color/white"
                 android:textColorHint="@color/hint_color"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:autofillHints="@string/email"
                 android:inputType="textEmailAddress" />
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -51,9 +51,10 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="50dp"
                 android:background="@drawable/bg_edit_text"
+                android:textColor="@color/white"
                 android:hint="@string/input_name"
                 android:textColorHint="@color/hint_color"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:paddingStart="25dp"
                 android:paddingEnd="10dp"
                 android:autofillHints="@string/input_name"
@@ -61,25 +62,26 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="50dp"
+                android:textColorHint="@color/hint_color"
                 android:background="@drawable/bg_edit_text"
                 app:passwordToggleEnabled="true"
                 app:passwordToggleDrawable="@drawable/password_icon"
                 app:passwordToggleTint="@color/white">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:textSize="14sp"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:paddingStart="25dp"
-                    android:paddingEnd="10dp"
+                    android:layout_marginStart="15dp"
+                    android:background="@null"
+                    android:textColor="@color/white"
+                    android:hint="@string/write_password"
                     android:inputType="textPassword"
-                    android:textColorHint="@color/hint_color"
-                    android:hint="@string/write_password">
+                    android:textSize="16sp">
 
                 </com.google.android.material.textfield.TextInputEditText>
 
@@ -91,6 +93,7 @@
                 android:layout_marginStart="50dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="50dp"
+                android:textColorHint="@color/hint_color"
                 android:background="@drawable/bg_edit_text"
                 app:passwordToggleEnabled="true"
                 app:passwordToggleDrawable="@drawable/password_icon"
@@ -101,11 +104,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginStart="15dp"
                     android:hint="@string/rewrite_password"
-                    android:paddingStart="25dp"
-                    android:paddingEnd="10dp"
-                    android:textColorHint="@color/hint_color"
-                    android:textSize="14sp"
+                    android:background="@null"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
                     android:inputType="textPassword">
 
             </com.google.android.material.textfield.TextInputEditText>

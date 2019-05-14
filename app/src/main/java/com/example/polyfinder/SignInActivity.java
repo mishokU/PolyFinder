@@ -13,6 +13,6 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_in_activity);
-        ButterKnife.bind(this);
+        //ButterKnife.bind(this);
     }
 }

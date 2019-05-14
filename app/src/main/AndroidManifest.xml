@@ -13,7 +13,8 @@
 
         <activity android:name=".MainActivity"/>
         
-        <activity android:name=".RegisterActivity">
+        <activity android:name=".RegisterActivity"
+            android:fitsSystemWindows="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW"/>
@@ -21,7 +22,10 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".SignInActivity"/>
+        <activity android:name=".SignInActivity"
+            android:fitsSystemWindows="true">
+
+        </activity>
 
     </application>
 
