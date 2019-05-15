@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="250dp">
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_height="15dp"
+        android:background="@drawable/down_arrow"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Что ищем?"
+        android:textColorHint="@color/white"
+        android:padding="10dp"
+        android:background="@drawable/bg_edit_text"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="15dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:background="@drawable/bg_edit_text"
+        android:layout_marginTop="5dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:background="@null"
+            android:layout_weight="1"
+            android:layout_marginEnd="5dp"
+            android:text="@string/only_lost"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="5dp"
+            android:background="@null"
+            android:text="@string/only_found"
+            android:textColor="@color/white"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/item_type"
+            android:textColor="@color/bg_edit_text"
+            android:layout_marginEnd="5dp"
+            android:layout_gravity="center_vertical"
+            android:textSize="22sp"/>
+
+        <ImageButton
+            android:id="@+id/documents"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:background="@drawable/bg_edit_text"
+            android:layout_margin="5dp"
+            android:src="@drawable/document_icon"
+            android:scaleType="fitCenter"
+            android:layout_weight="1"/>
+
+        <ImageButton
+            android:id="@+id/electronics"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:scaleType="fitCenter"
+            android:layout_margin="5dp"
+            android:background="@drawable/bg_edit_text"
+            android:src="@drawable/electronic_icon"
+            android:layout_weight="1"/>
+
+        <ImageButton
+            android:id="@+id/eat"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/bg_edit_text"
+            android:src="@drawable/eat_icon"
+            android:scaleType="fitCenter"
+            android:layout_weight="1"/>
+
+        <ImageButton
+            android:id="@+id/clothing"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/bg_edit_text"
+            android:src="@drawable/clothing_icon"
+            android:scaleType="fitCenter"
+            android:layout_weight="1"/>
+
+        <ImageButton
+            android:id="@+id/others"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:scaleType="fitCenter"
+            android:layout_margin="5dp"
+            android:background="@drawable/bg_edit_text"
+            android:src="@drawable/other_icno"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/publish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/publich_request"
+        android:textColor="@color/white"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/button_start"/>
+
+</LinearLayout>

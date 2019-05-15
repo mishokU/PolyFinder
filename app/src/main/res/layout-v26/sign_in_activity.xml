@@ -42,26 +42,26 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="50dp"
+        android:textColorHint="@color/hint_color"
         android:background="@drawable/bg_edit_text"
         app:passwordToggleEnabled="true"
         app:passwordToggleDrawable="@drawable/password_icon"
-        app:passwordToggleTint="@color/colorAccent">
+        app:passwordToggleTint="@color/white">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:textSize="14sp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:paddingStart="25dp"
+            android:layout_marginStart="15dp"
+            android:background="@null"
+            android:textColor="@color/white"
+            android:hint="@string/write_password"
             android:inputType="textPassword"
-            android:paddingEnd="10dp"
-            android:textColorHint="@color/hint_color"
-            android:hint="@string/write_password">
-
+            android:textSize="16sp">
 
         </com.google.android.material.textfield.TextInputEditText>
 

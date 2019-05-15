@@ -11,4 +11,19 @@
     <string name="forget_password">Забыл\nпароль</string>
     <string name="create_account">Создать\nаккаунт</string>
     <string name="sign_in_account">Войти в аккаунт</string>
+    <string name="found">Найдено:</string>
+    <string name="message">message</string>
+    <string name="search">search</string>
+    <string name="profile">profile</string>
+    <string name="publich_request">ОПУБЛИКОВАТЬ ЗАЯВКУ</string>
+    <string name="swipe_to_left">Что-то потеряли? Свайпните влево</string>
+    <string name="what_you_found">Что вы нашли?</string>
+    <string name="describe_item">Опишите найденный предмет(128 символов):</string>
+    <string name="swipe_lost">Что-то потеряли? Свайпните влево</string>
+    <string name="what_did_you_lose">Что вы потеряли?</string>
+    <string name="do_you_found">Вы нашли предмет? Свайпните вправо</string>
+    <string name="describe_lost">Опишите потерянный предмет(128 символов)</string>
+    <string name="only_lost">Only Lost</string>
+    <string name="only_found">Only Found</string>
+    <string name="item_type">Type item</string>
 </resources>
