@@ -26,4 +26,10 @@
     <string name="only_lost">Only Lost</string>
     <string name="only_found">Only Found</string>
     <string name="item_type">Type item</string>
+    <string name="communicate_in_chat">Communicate in chat</string>
+    <string name="telephone">+7854342344</string>
+    <string name="user_name">Misha Usov</string>
+    <string name="title">VLAD</string>
+    <string name="logout">LogOut</string>
+    <string name="settings">settings</string>
 </resources>

@@ -2,14 +2,14 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#FFFFFF</color>
     <color name="bg_edit_text">#A3140F26</color>
     <color name="edit_text">#FFFFFF</color>
     <color name="violet_start">#7972E9</color>
     <color name="violet_end">#A573FF</color>
     <color name="hint_color">#66FFFFFF</color>
     <color name="white">#FFFFFF</color>
-    <color name="request_end">#18EBB6</color>
+    <color name="request_end">#3DBEA1</color>
     <color name="request_center">#2BC3B4</color>
     <color name="request_center2">#18EBB6</color>
     <color name="request_start">#4DA7FFEB</color>

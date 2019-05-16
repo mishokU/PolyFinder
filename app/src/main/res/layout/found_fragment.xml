@@ -1,30 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="310dp">
+    android:background="@color/white"
+    android:id="@+id/mainRelative"
+    android:windowSoftInputMode="adjustPan"
+    android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/down_arrow"
         android:layout_width="25dp"
         android:layout_marginTop="5dp"
         android:layout_height="15dp"
         android:background="@drawable/down_arrow"
         android:scaleType="centerCrop"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/text_place"
-        android:layout_weight="1"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:layout_marginTop="10dp"
+        android:layout_below="@id/down_arrow"
         android:orientation="vertical"
         android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
         android:background="@drawable/request_gradient"
-        android:layout_height="0dp">
+        android:layout_height="wrap_content">
 
         <EditText
             android:id="@+id/title"
@@ -38,8 +44,10 @@
             android:gravity="start|center"
             android:hint="@string/what_you_found"
             android:padding="10dp"
+            android:textColor="@color/white"
             android:textAlignment="gravity"
             android:textColorHint="@color/white"
+            android:textSize="14sp"
             app:layout_constraintBottom_toTopOf="@+id/description"
             app:layout_constraintEnd_toStartOf="@+id/type"
             app:layout_constraintStart_toStartOf="@+id/description"
@@ -54,6 +62,7 @@
             android:background="@drawable/bg_edit_text_request"
             android:text="Тип"
             android:textAlignment="gravity"
+            android:gravity="top|center_horizontal"
             android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/description"
@@ -75,6 +84,8 @@
             android:padding="10dp"
             android:textAlignment="gravity"
             android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/request_image"
             app:layout_constraintHorizontal_bias="0.0"
@@ -108,11 +119,14 @@
         android:textColor="@color/white"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
+        android:layout_below="@id/text_place"
         android:background="@drawable/button_start"/>
 
     <RelativeLayout
+        android:id="@+id/swipe"
         android:layout_width="match_parent"
         android:orientation="horizontal"
+        android:layout_below="@id/publish"
         android:layout_marginTop="10dp"
         android:layout_height="40dp">
 
@@ -121,7 +135,8 @@
             android:layout_height="30dp"
             android:background="@drawable/left_arrow"
             android:layout_centerVertical="true"
-            android:layout_marginStart="35dp"
+            android:layout_toStartOf="@id/focus"
+            android:layout_marginEnd="10dp"
             android:scaleType="fitCenter"/>
 
             <TextView
@@ -129,10 +144,11 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
+                android:id="@+id/focus"
                 android:textSize="16sp"
                 android:text="@string/swipe_lost"
                 android:textColor="@color/swipe" />
 
     </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>
