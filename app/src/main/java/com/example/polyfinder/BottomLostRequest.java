@@ -1,11 +1,9 @@
 package com.example.polyfinder;
 
-import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -13,7 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 
-public class BottomFoundRequest extends Fragment {
+public class BottomLostRequest extends Fragment {
 
     private View view;
     private RelativeLayout mainRelative;
@@ -21,9 +19,7 @@ public class BottomFoundRequest extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.found_fragment, container, false);
-
-
+        view = inflater.inflate(R.layout.lost_fragment, container, false);
         return view;
     }
 

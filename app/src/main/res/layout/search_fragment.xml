@@ -3,11 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="250dp">
+    android:background="@color/white"
+    android:layout_height="310dp">
 
     <ImageView
         android:layout_width="25dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_height="15dp"
         android:background="@drawable/down_arrow"
         android:scaleType="centerCrop"
@@ -124,11 +125,39 @@
         android:id="@+id/publish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/publich_request"
+        android:text="@string/do_filter"
         android:textColor="@color/white"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/button_start"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/publish"
+        android:layout_height="40dp">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="30dp"
+            android:background="@drawable/right_arrow"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/swipe"
+            android:layout_marginStart="10dp"
+            android:scaleType="fitCenter"/>
+
+        <TextView
+            android:id="@+id/swipe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
+            android:text="@string/create_request_swipe_right"
+            android:textColor="@color/swipe" />
+
+    </RelativeLayout>
 
 </LinearLayout>

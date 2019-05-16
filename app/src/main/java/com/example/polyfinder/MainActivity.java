@@ -1,5 +1,6 @@
 package com.example.polyfinder;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.KeyboardShortcutGroup;
 import android.view.Menu;
@@ -7,10 +8,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.widget.NestedScrollView;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -25,6 +30,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @BindView(R.id.toolbar) public Toolbar toolbar;
     @BindView(R.id.fab) public FloatingActionButton fab;
+    @BindView(R.id.request_sheet) public NestedScrollView mRequestSheet;
+    @BindView(R.id.request_pager) public ViewPager mRequestViewPager;
+    @BindView(R.id.search_sheet) public NestedScrollView mSearchSheet;
+    @BindView(R.id.search_pager) public ViewPager mSearchPager;
+
     private BottomSheetBehavior mBottomSheetBehavior;
 
     @Override
@@ -33,7 +43,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        setFragmentAdapters();
+        setAllSheets();
         setUpViews();
+    }
+
+    private void setFragmentAdapters() {
+        BottomFragmentsAdapter mBottomFragmentsAdapter = new BottomFragmentsAdapter(getSupportFragmentManager());
+        mBottomFragmentsAdapter.addFragment(new BottomFoundRequest());
+        mBottomFragmentsAdapter.addFragment(new BottomLostRequest());
+        mBottomFragmentsAdapter.addFragment(new SearchBottomFragment());
+        mRequestViewPager.setAdapter(mBottomFragmentsAdapter);
+    }
+
+    private void setAllSheets() {
+        mRequestSheet.setFillViewport (true);
+        mBottomSheetBehavior = BottomSheetBehavior.from(mRequestSheet);
+        mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+            @Override
+            public void onStateChanged(@NonNull View view, int i) {
+
+            }
+
+            @Override
+            public void onSlide(@NonNull View view, float v) {
+                closeKeyBoard();
+            }
+        });
+    }
+
+    private void closeKeyBoard() {
+        View view = this.getCurrentFocus();
+        if(view != null){
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(),0);
+        }
     }
 
     private void setUpViews() {
@@ -70,6 +114,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void showSearchFragment() {
+        mRequestViewPager.setCurrentItem(2);
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
     @Override
@@ -80,8 +126,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void openNewRequestFragment() {
-        BottomFoundRequest foundRequest = new BottomFoundRequest();
-        foundRequest.show(getSupportFragmentManager(), "foundFragment");
+        mRequestViewPager.setCurrentItem(0);
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
 }

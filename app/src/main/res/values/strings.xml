@@ -32,4 +32,6 @@
     <string name="title">VLAD</string>
     <string name="logout">LogOut</string>
     <string name="settings">settings</string>
+    <string name="do_filter">do_filter</string>
+    <string name="create_request_swipe_right">Create Request? Swipe right</string>
 </resources>

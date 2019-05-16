@@ -9,7 +9,9 @@
     app:theme="@style/ThemeOverlay.AppCompat.ActionBar"
     app:layout_scrollFlags="scroll|enterAlways|snap"
     app:titleTextColor="@color/request_end"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
+    android:gravity="start"
+    android:textAlignment="gravity"
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    app:titleTextAppearance="@style/Toolbar.TitleText">
 
 </androidx.appcompat.widget.Toolbar>
