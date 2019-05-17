@@ -33,8 +33,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.fab) public FloatingActionButton fab;
     @BindView(R.id.request_sheet) public NestedScrollView mRequestSheet;
     @BindView(R.id.request_pager) public ViewPager mRequestViewPager;
-    @BindView(R.id.search_sheet) public NestedScrollView mSearchSheet;
-    @BindView(R.id.search_pager) public ViewPager mSearchPager;
 
     private BottomSheetBehavior mBottomSheetBehavior;
 
@@ -116,7 +114,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void launchActivity() {
         Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
-        finish();
     }
 
     private void showSearchFragment() {
