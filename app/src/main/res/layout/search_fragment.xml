@@ -20,6 +20,7 @@
         android:hint="Что ищем?"
         android:textColorHint="@color/white"
         android:padding="10dp"
+        android:textColor="@color/white"
         android:background="@drawable/bg_edit_text"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"

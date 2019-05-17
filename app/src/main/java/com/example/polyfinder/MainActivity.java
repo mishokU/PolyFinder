@@ -1,6 +1,7 @@
 package com.example.polyfinder;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyboardShortcutGroup;
 import android.view.Menu;
@@ -62,7 +63,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBottomSheetBehavior.setBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
             @Override
             public void onStateChanged(@NonNull View view, int i) {
-
+                if (i == BottomSheetBehavior.STATE_COLLAPSED) {
+                    fab.show();
+                }
             }
 
             @Override
@@ -111,6 +114,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void launchActivity() {
+        Intent intent = new Intent(this, ProfileActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     private void showSearchFragment() {
@@ -121,6 +127,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         if(v == fab){
+            fab.hide();
             openNewRequestFragment();
         }
     }

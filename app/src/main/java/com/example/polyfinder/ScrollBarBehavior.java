@@ -17,6 +17,8 @@ public class ScrollBarBehavior extends FloatingActionButton.Behavior {
         super(context,attributeSet);
     }
 
+
+
     @Override
     public void onNestedScroll(CoordinatorLayout coordinatorLayout, FloatingActionButton child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
         super.onNestedScroll(coordinatorLayout, child, target, dxConsumed, dyConsumed, dxUnconsumed, dyUnconsumed, type);
