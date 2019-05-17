@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void showSearchFragment() {
+        fab.hide();
         mRequestViewPager.setCurrentItem(2);
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
