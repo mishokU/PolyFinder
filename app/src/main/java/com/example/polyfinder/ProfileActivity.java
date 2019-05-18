@@ -24,10 +24,10 @@ import butterknife.ButterKnife;
 public class ProfileActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar) public Toolbar mToolbar;
-    @BindView(R.id.list_view) public ListView mListView;
+    //@BindView(R.id.list_view) public ListView mListView;
     @BindView(R.id.user_name) public TextView mUserName;
     @BindView(R.id.telephone) public TextView mUserPhoneNumber;
-    @BindView(R.id.greeting) public TextView mUserGreeting;
+    //@BindView(R.id.greeting) public TextView mUserGreeting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void setUpToolbar() {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        getSupportActionBar().setTitle("Back to main tape");
     }
 
     @Override

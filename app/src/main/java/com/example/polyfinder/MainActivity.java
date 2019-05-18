@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -27,12 +29,17 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,
+        SearchBottomFragment.Transmitter, Filterable {
 
     @BindView(R.id.toolbar) public Toolbar toolbar;
     @BindView(R.id.fab) public FloatingActionButton fab;
     @BindView(R.id.request_sheet) public NestedScrollView mRequestSheet;
     @BindView(R.id.request_pager) public ViewPager mRequestViewPager;
+
+    private String mCategory;
+    private String mType;
+    private String mSearch;
 
     private BottomSheetBehavior mBottomSheetBehavior;
 
@@ -135,4 +142,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
     }
 
+    @Override
+    public void onDataSend(String type, String category, String search) {
+        mCategory = category;
+        mType = type;
+        mSearch = search;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return null;
+    }
 }

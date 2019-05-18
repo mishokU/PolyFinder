@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#FFFFFF</color>
     <color name="bg_edit_text">#A3140F26</color>
@@ -11,9 +11,13 @@
     <color name="white">#FFFFFF</color>
     <color name="request_end">#3DBEA1</color>
     <color name="request_center">#2BC3B4</color>
-    <color name="request_center2">#18EBB6</color>
+    <color name="request_center2">c</color>
     <color name="request_start">#4DA7FFEB</color>
     <color name="bg_edit_text_request">#00695C</color>
     <color name="text_request">#BDBBBB</color>
     <color name="swipe">#333333</color>
+
+    <color name="profile_gradient_start">#2BC3B4</color>
+    <color name="profile_gradient_center">#332BC3B4</color>
+    <color name="profile_gradient_end">#66B9E7DB</color>
 </resources>

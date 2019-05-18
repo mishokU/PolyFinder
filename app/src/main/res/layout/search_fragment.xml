@@ -172,7 +172,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/publish"
+        android:id="@+id/do_filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/do_filter"

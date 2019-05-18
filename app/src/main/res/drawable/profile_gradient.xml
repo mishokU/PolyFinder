@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <gradient
-        android:startColor="@color/request_end"
-        android:centerColor="@color/request_center2"
+        android:startColor="@color/profile_gradient_start"
+        android:centerColor="@color/profile_gradient_center"
         android:type="linear"
         android:angle="90"
-        android:endColor="@color/request_start"/>
+        android:endColor="@color/profile_gradient_end"/>
     <corners android:topRightRadius="20dp"
         android:topLeftRadius="20dp"/>
 

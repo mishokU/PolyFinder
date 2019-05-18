@@ -1,10 +1,12 @@
 package com.example.polyfinder;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -13,44 +15,62 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SearchBottomFragment extends Fragment
         implements RadioGroup.OnCheckedChangeListener {
 
     private View mView;
+    private EditText mSearchText;
     private RadioGroup mRequestGroup;
     private RadioGroup mCategotyGroup;
-    private Button mPublish;
+    private Button mFilterButton;
     private String mRequestType;
     private String mCategotyType;
+
+    private Transmitter transmitter;
+
+    public interface Transmitter {
+        public void onDataSend(String type,String category,String search);
+    }
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate((R.layout.search_fragment),container,false);
 
-        mRequestGroup = mView.findViewById(R.id.request_group);
-        mCategotyGroup = mView.findViewById(R.id.categoty_group);
-        mPublish = mView.findViewById(R.id.publish);
-
-        mRequestGroup.setOnCheckedChangeListener(this);
-        mCategotyGroup.setOnCheckedChangeListener(this);
-
+        findAllViews();
         setOnActions();
 
         return mView;
     }
 
+    private void findAllViews() {
+
+        mSearchText = mView.findViewById(R.id.search_text);
+        mRequestGroup = mView.findViewById(R.id.request_group);
+        mCategotyGroup = mView.findViewById(R.id.categoty_group);
+
+        mFilterButton = mView.findViewById(R.id.do_filter);
+    }
+
     private void setOnActions() {
-        mPublish.setOnClickListener(new View.OnClickListener() {
+
+        mRequestGroup.setOnCheckedChangeListener(this);
+        mCategotyGroup.setOnCheckedChangeListener(this);
+
+        mFilterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addToServer();
+                doFilter();
             }
         });
     }
 
-    private void addToServer() {
-
+    private void doFilter() {
+        transmitter.onDataSend(mRequestType,mCategotyType,mSearchText.getText().toString());
     }
 
     @Override
@@ -91,11 +111,20 @@ public class SearchBottomFragment extends Fragment
         }
     }
 
-    public String getRequestType(){
-        return mRequestType;
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof Transmitter) {
+            transmitter = (Transmitter) context;
+        } else{
+            throw new RuntimeException(context.toString()
+            + "must implement Transmitter");
+        }
     }
 
-    public String getCategotyType(){
-        return mCategotyType;
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        transmitter = null;
     }
 }

@@ -4,30 +4,22 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
-    <LinearLayout
-        android:layout_height="match_parent"
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:id="@+id/appBarLayout"
+        android:theme="@style/ThemeOverlay.AppCompat.Light">
 
         <include
             android:id="@+id/toolbar"
             layout="@layout/toolbar_for_all">
         </include>
 
-        <LinearLayout
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/greeting"
-                android:text="Welcome, Misha"
-                android:textSize="22sp"
-                android:layout_marginBottom="10dp"
-                android:gravity="center_horizontal"
-                android:textAlignment="gravity"/>
+            android:layout_height="280dp"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="scroll|enterAlwaysCollapsed|snap">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="180dp"
@@ -36,12 +28,20 @@
                 app:border_width="2dp"
                 app:border_color="@color/bg_edit_text"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="35dp"
                 android:src="@drawable/quila2" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:title=""
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center_horizontal">
 
@@ -49,6 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/user_name"
+                    android:textSize="22sp"
                     android:text="Misha Usov"/>
 
                 <ImageView
@@ -64,56 +65,89 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/telephone"
+                    android:textSize="18sp"
                     android:text="+79219856432"/>
 
             </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                android:text="Your Requests"
-                android:layout_gravity="center_horizontal"/>
-
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/left_arrow" />
+                android:layout_height="60dp"
+                android:layout_width="match_parent"
+                android:layout_gravity="bottom"
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Swipe on left or right\n to delete request"/>
+                    android:text="Your Requests"
+                    android:layout_gravity="center_horizontal"/>
 
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:src="@drawable/right_arrow"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/left_arrow" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Swipe on left or right\n to delete request"/>
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_gravity="center_vertical"
+                        android:src="@drawable/right_arrow"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include
+                layout="@layout/found_item"/>
+
+            <include
+                layout="@layout/found_item"/>
+
+            <include
+                layout="@layout/found_item"/>
+
+
+            <include
+                layout="@layout/found_item"/>
+
+
+            <include
+                layout="@layout/found_item"/>
+
+
         </LinearLayout>
 
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_marginTop="10dp"
-            android:id="@+id/list_view"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
 
 
-        </ListView>
+    </androidx.core.widget.NestedScrollView>
 
-
-    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
