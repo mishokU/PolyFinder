@@ -11,8 +11,8 @@
     <color name="white">#FFFFFF</color>
     <color name="request_end">#3DBEA1</color>
     <color name="request_center">#2BC3B4</color>
-    <color name="request_center2">c</color>
-    <color name="request_start">#4DA7FFEB</color>
+    <color name="request_center2">#9940DB94</color>
+    <color name="request_start">#B33FDDBB</color>
     <color name="bg_edit_text_request">#00695C</color>
     <color name="text_request">#BDBBBB</color>
     <color name="swipe">#333333</color>

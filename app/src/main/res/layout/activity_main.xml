@@ -19,24 +19,14 @@
         android:layout_marginTop="55dp"
         android:layout_below="@id/toolbar">
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:id="@+id/recyclerview"
+            android:orientation="vertical"
+            tools:listitem="@layout/found_item">
 
-            <include layout="@layout/found_item" />
-
-            <include layout="@layout/found_item" />
-
-            <include layout="@layout/found_item" />
-
-            <include layout="@layout/found_item" />
-
-            <include layout="@layout/found_item" />
-
-            <include layout="@layout/found_item" />
-
-        </LinearLayout>
+        </androidx.recyclerview.widget.RecyclerView>
 
     </androidx.core.widget.NestedScrollView>
 

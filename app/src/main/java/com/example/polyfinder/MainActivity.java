@@ -2,6 +2,7 @@ package com.example.polyfinder;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.KeyboardShortcutGroup;
 import android.view.Menu;
@@ -18,11 +19,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.OrientationHelper;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,6 +42,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.request_sheet) public NestedScrollView mRequestSheet;
     @BindView(R.id.request_pager) public ViewPager mRequestViewPager;
 
+
+
+    @BindView(R.id.recyclerview) public RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private ArrayList<RequestItem> mRequestItemList = new ArrayList<>();
+
     private String mCategory;
     private String mType;
     private String mSearch;
@@ -49,9 +61,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        setRecyclerViewAdapter();
         setFragmentAdapters();
         setAllSheets();
         setUpViews();
+    }
+
+
+    public void addItem(String type,String title,String description,String imageURL){
+
+        //Chose type
+        int mType = 0;
+        if(type.equals("Found")){
+            mType = RequestItem.LOST_ITEM;
+        }else {
+            mType = RequestItem.FOUND_ITEM;
+        }
+        //
+        mRequestItemList.add(new RequestItem(mType,title,description,imageURL));
+    }
+
+    private void setRecyclerViewAdapter() {
+        mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL,false);
+        mAdapter = new MainTypeRequestAdapter(mRequestItemList);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void setFragmentAdapters() {
