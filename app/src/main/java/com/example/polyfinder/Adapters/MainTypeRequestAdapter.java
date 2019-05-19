@@ -19,7 +19,7 @@ public class MainTypeRequestAdapter extends RecyclerView.Adapter {
 
     private ArrayList<Requests> mRequests;
     private OnItemClickListener mOnItemClickListener;
-    View view;
+    private View view;
 
     public interface OnItemClickListener{
         void onItemClick(int position);
@@ -40,7 +40,6 @@ public class MainTypeRequestAdapter extends RecyclerView.Adapter {
         switch (viewType){
             case Requests.FOUND_ITEM:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.found_item, parent,false);
-                System.out.println("LOOST");
                 return new FoundItemHolder(view,mOnItemClickListener);
             case Requests.LOST_ITEM:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lost_item, parent,false);
