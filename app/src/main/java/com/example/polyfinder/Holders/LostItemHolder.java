@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.polyfinder.Adapters.MainTypeRequestAdapter;
 import com.example.polyfinder.R;
+import com.squareup.picasso.Target;
 
 public class LostItemHolder extends RecyclerView.ViewHolder {
 
@@ -42,5 +43,8 @@ public class LostItemHolder extends RecyclerView.ViewHolder {
 
     public TextView getDescriptionView(){
         return description;
+    }
+
+    public ImageView getImage() { return image;
     }
 }

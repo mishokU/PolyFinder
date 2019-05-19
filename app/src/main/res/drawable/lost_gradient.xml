@@ -4,7 +4,7 @@
         android:startColor="@color/request_end"
         android:centerColor="@color/request_center"
         android:type="linear"
-        android:angle="315"
-        android:endColor="@color/request_start"/>
+        android:angle="0"
+        android:endColor="@color/white_transparent"/>
     <corners android:radius="20dp"/>
 </shape>

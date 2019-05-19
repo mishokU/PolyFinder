@@ -39,7 +39,7 @@ public class ChatActivity extends AppCompatActivity {
     private void setToolbar() {
       setSupportActionBar(mToolbar);
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-      getSupportActionBar().setTitle("Back to main tape");
+      getSupportActionBar().setTitle("Назад на Главную");
     }
 
     private void setRecyclerViewAdapter() {

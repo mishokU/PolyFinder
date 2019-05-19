@@ -9,6 +9,7 @@
     <color name="violet_end">#A573FF</color>
     <color name="hint_color">#66FFFFFF</color>
     <color name="white">#FFFFFF</color>
+    <color name="white_transparent">#23FFFFFF</color>
     <color name="request_end">#3DBEA1</color>
     <color name="request_center">#2BC3B4</color>
     <color name="request_center2">#9940DB94</color>

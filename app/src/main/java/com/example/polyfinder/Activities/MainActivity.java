@@ -24,14 +24,19 @@ import com.example.polyfinder.Adapters.BottomFragmentsAdapter;
 import com.example.polyfinder.Adapters.MainTypeRequestAdapter;
 import com.example.polyfinder.Fragments.BottomFoundRequest;
 import com.example.polyfinder.Fragments.BottomLostRequest;
-import com.example.polyfinder.Items.RequestItem;
+import com.example.polyfinder.Items.Requests;
 import com.example.polyfinder.R;
 import com.example.polyfinder.Fragments.SearchBottomFragment;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.annotations.Nullable;
 
 import java.util.ArrayList;
 
@@ -49,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.recyclerview) public RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
-    private ArrayList<RequestItem> mRequestItemList = new ArrayList<>();
+    private ArrayList<Requests> mRequestsList = new ArrayList<>();
 
     private String mCategory;
     private String mType;
@@ -59,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private FirebaseAuth mAuth;
     private DatabaseReference reference;
+    private DatabaseReference requestDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,13 +72,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mAuth = FirebaseAuth.getInstance();
+        requestDatabase = FirebaseDatabase.getInstance().getReference().child("Requests");
 
-        createList();
+
         setRecyclerViewAdapter();
         setFragmentAdapters();
         setAllSheets();
         setUpViews();
-        addItem("Found","Hi","Hi found", "dqwpokdqwkodpqkw");
+        //createList();
+        loadRequests();
+        //addItem(new Requests("lost","Hi","Hi lmaaaaaan", "dqwpokdqwkodpqkw"));
     }
 
     @Override
@@ -94,28 +103,70 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void createList() {
-        mRequestItemList.add(new RequestItem(1,"Hi","Hi found", "dqwpokdqwkodpqkw"));
-        mRequestItemList.add(new RequestItem(0,"Hi","Hi found", "dqwpokdqwkodpqkw"));
-        mRequestItemList.add(new RequestItem(0,"Hi","Hi found", "dqwpokdqwkodpqkw"));
+        loadRequests();
+       mRequestsList.add(new Requests("found","Hi","Hi found", "dqwpokdqwkodpqkw"));
+        System.out.println(mRequestsList.size()+ "MAYBE YOU CRY PISS YOUR PANTS MAYBE");
+       // mRequestsList.add(new Requests(0,"Hi","Hi found", "dqwpokdqwkodpqkw"));
+       // mRequestsList.add(new Requests(0,"Hi","Hi found", "dqwpokdqwkodpqkw"));
+    }
+
+    private void loadRequests(){
+        requestDatabase.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Requests request = dataSnapshot.getValue(Requests.class);
+                System.out.println(dataSnapshot.getKey() + "REQUEST FROM DATABASE");
+                //String type = request.getType();
+                //String title = request.getTitle();
+                //String description = request.getDescription();
+                //String image = request.getImage();
+                //if(type.equals("found")){
+                    //addItem(type, title, description, image);
+                //mRequestsList.add(new Requests("found","Hi","Hi found", "pepe"));
+                    addItem(request);
+                    mAdapter.notifyDataSetChanged();
+                //}
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
-    public void addItem(String type,String title,String description,String imageURL){
+    public void addItem(Requests request){//(String type,String title,String description,String imageURL){
 
         //Chose type
         int mType = 0;
-        if(type.equals("Found")){
-            mType = RequestItem.FOUND_ITEM;
+        if(request.getType().equals("found")){
+            mType = Requests.FOUND_ITEM;
         }else {
-            mType = RequestItem.LOST_ITEM;
+            mType = Requests.LOST_ITEM;
         }
         //
-        mRequestItemList.add(0,new RequestItem(mType,title,description,imageURL));
+        mRequestsList.add(0, request);//new Requests(type, title,description,imageURL)
     }
 
     private void setRecyclerViewAdapter() {
         mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL,false);
-        mAdapter = new MainTypeRequestAdapter(mRequestItemList);
+        mAdapter = new MainTypeRequestAdapter(mRequestsList);
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);

@@ -11,6 +11,7 @@
     app:titleTextColor="@color/bg_edit_text"
     android:gravity="start"
     android:textAlignment="gravity"
-    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+    >
 
 </androidx.appcompat.widget.Toolbar>

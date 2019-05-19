@@ -3,7 +3,6 @@ package com.example.polyfinder.Adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,14 +10,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.polyfinder.Holders.FoundItemHolder;
 import com.example.polyfinder.Holders.LostItemHolder;
 import com.example.polyfinder.R;
-import com.example.polyfinder.Items.RequestItem;
+import com.example.polyfinder.Items.Requests;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class MainTypeRequestAdapter extends RecyclerView.Adapter {
 
-    private ArrayList<RequestItem> mRequestItems;
+    private ArrayList<Requests> mRequests;
     private OnItemClickListener mOnItemClickListener;
+    View view;
 
     public interface OnItemClickListener{
         void onItemClick(int position);
@@ -28,19 +29,20 @@ public class MainTypeRequestAdapter extends RecyclerView.Adapter {
         mOnItemClickListener = listener;
     }
 
-    public MainTypeRequestAdapter(ArrayList<RequestItem> requestItems){
-        this.mRequestItems = requestItems;
+    public MainTypeRequestAdapter(ArrayList<Requests> requests){
+        this.mRequests = requests;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view;
+        //View view;
         switch (viewType){
-            case RequestItem.FOUND_ITEM:
+            case Requests.FOUND_ITEM:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.found_item, parent,false);
+                System.out.println("LOOST");
                 return new FoundItemHolder(view,mOnItemClickListener);
-            case RequestItem.LOST_ITEM:
+            case Requests.LOST_ITEM:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lost_item, parent,false);
                 return new LostItemHolder(view,mOnItemClickListener);
         }
@@ -49,36 +51,43 @@ public class MainTypeRequestAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        RequestItem item = mRequestItems.get(position);
+        Requests item = mRequests.get(position);
         if(item != null){
             switch (item.getType()){
-                case RequestItem.FOUND_ITEM:
+                case "found":
                     ((FoundItemHolder)holder).getTitleView().setText(item.getTitle());
                     ((FoundItemHolder) holder).getDescriptionView().setText(item.getDescription());
-                    // Image
+                    Picasso.get().load(item.getImage()).placeholder(R.mipmap.request_default)
+                            .into(((FoundItemHolder) holder).getImage());
                     break;
-                case RequestItem.LOST_ITEM:
+                case "lost":
                     ((LostItemHolder) holder).getTitleView().setText(item.getTitle());
                     ((LostItemHolder) holder).getDescriptionView().setText(item.getDescription());
-                    // Image
+                    Picasso.get().load(item.getImage()).placeholder(R.mipmap.request_default)
+                            .into(((LostItemHolder) holder).getImage());
+                    break;// Image
             }
         }
     }
 
     @Override
     public int getItemCount() {
-        return mRequestItems.size();
+        return mRequests.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        switch (mRequestItems.get(position).getType()){
-            case 0:
-                return RequestItem.LOST_ITEM;
-            case 1:
-                return RequestItem.FOUND_ITEM;
-            default:
-                return -1;
+        switch (mRequests.get(position).getType()){
+            case "lost":{
+                System.out.println("ADDING LOST ITEM "+ mRequests.get(position).getDescription());
+                return Requests.LOST_ITEM;}
+            case "found":{
+                System.out.println("ADDING FOUND ITEM "+ mRequests.get(position).getDescription());
+                return Requests.FOUND_ITEM;}
+            default:{
+                System.out.println("NOT ADDING ITEM "+ mRequests.get(position).getDescription());
+
+                return -1;}
         }
     }
 }
