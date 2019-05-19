@@ -15,9 +15,13 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.polyfinder.Items.RequestItem;
 import com.example.polyfinder.R;
 import com.google.android.material.appbar.AppBarLayout;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,10 +29,13 @@ import butterknife.ButterKnife;
 public class ProfileActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar) public Toolbar mToolbar;
-    //@BindView(R.id.list_view) public ListView mListView;
+    @BindView(R.id.recyclerview) public RecyclerView mRecyclerView;
     @BindView(R.id.user_name) public TextView mUserName;
     @BindView(R.id.telephone) public TextView mUserPhoneNumber;
-    //@BindView(R.id.greeting) public TextView mUserGreeting;
+
+    private ArrayList<RequestItem> mRequestItems;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.Adapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
