@@ -24,10 +24,12 @@ import com.example.polyfinder.Adapters.BottomFragmentsAdapter;
 import com.example.polyfinder.Adapters.MainTypeRequestAdapter;
 import com.example.polyfinder.Fragments.BottomFoundRequest;
 import com.example.polyfinder.Fragments.BottomLostRequest;
+import com.example.polyfinder.Fragments.BottomProfileRequestDialog;
 import com.example.polyfinder.Items.Requests;
 import com.example.polyfinder.R;
 import com.example.polyfinder.Fragments.SearchBottomFragment;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -175,10 +177,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ((MainTypeRequestAdapter) mAdapter).setOnItemClickListener(new MainTypeRequestAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+                openFullRequest(mRequestsList.get(position));
                 Toast.makeText(MainActivity.this,"Clicked: " + position,Toast.LENGTH_SHORT).show();
             }
         });
 
+    }
+
+    private void openFullRequest(Requests requests) {
+        BottomProfileRequestDialog bottomProfileRequestDialog = new BottomProfileRequestDialog();
+        Bundle bundle = new Bundle();
+
+        bundle.putString("title", requests.getTitle());
+        bundle.putString("description", requests.getDescription());
+        bundle.putString("imageURL", requests.getImage());
+
+        bottomProfileRequestDialog.setArguments(bundle);
+        bottomProfileRequestDialog.show(getSupportFragmentManager(),"request");
     }
 
     private void setFragmentAdapters() {

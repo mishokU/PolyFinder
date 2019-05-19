@@ -7,16 +7,16 @@
     android:layout_height="250dp">
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/request_photo"
         android:layout_width="200dp"
         android:layout_height="200dp"
         app:srcCompat="@drawable/logo" />
 
     <View
-        android:layout_height="match_parent"
+        android:layout_height="250dp"
         android:layout_width="match_parent"
+        android:id="@+id/gradient"
         android:background="@drawable/profile_gradient">
-
     </View>
 
     <ImageView
@@ -45,14 +45,16 @@
         android:layout_below="@id/title"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="15dp"
+        android:maxWidth="200dp"
+        android:maxLines="10"
         android:textColor="@color/bg_edit_text"
-        android:text="@string/describe_item" />
+        android:text="fioewifioejfoweifewfewojfeowejfowefojewfwejwejfeowfjewofweofwoefejowwioejfwifjeowf" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
-        android:layout_alignParentBottom="true">
+        android:layout_alignBottom="@id/gradient">
 
         <ImageView
             android:id="@+id/imageView2"
