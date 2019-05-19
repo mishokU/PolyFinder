@@ -18,6 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.polyfinder.R;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,6 +68,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void logOut() {
+        FirebaseAuth.getInstance().signOut();
         Intent activity = new Intent(this, SignInActivity.class);
         activity.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(activity);

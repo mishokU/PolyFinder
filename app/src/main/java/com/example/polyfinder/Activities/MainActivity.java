@@ -29,6 +29,9 @@ import com.example.polyfinder.R;
 import com.example.polyfinder.Fragments.SearchBottomFragment;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
 
 import java.util.ArrayList;
 
@@ -54,11 +57,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private BottomSheetBehavior mBottomSheetBehavior;
 
+    private FirebaseAuth mAuth;
+    private DatabaseReference reference;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        mAuth = FirebaseAuth.getInstance();
 
         createList();
         setRecyclerViewAdapter();
@@ -66,6 +73,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setAllSheets();
         setUpViews();
         addItem("Found","Hi","Hi found", "dqwpokdqwkodpqkw");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        //updateUI(currentUser);
+        if( currentUser == null){
+            sendToStart();
+        }
+    }
+
+    //CHECK IF USER IS AUTH
+    private void sendToStart() {
+        Intent startIntent = new Intent(MainActivity.this, RegisterActivity.class);
+        startActivity(startIntent);
+        finish();
     }
 
     private void createList() {
