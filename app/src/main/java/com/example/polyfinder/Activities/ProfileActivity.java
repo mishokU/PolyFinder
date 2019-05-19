@@ -13,23 +13,38 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.ItemTouchHelper;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.polyfinder.Adapters.DialogsAdapter;
+import com.example.polyfinder.Adapters.MainTypeRequestAdapter;
+import com.example.polyfinder.Items.RequestItem;
 import com.example.polyfinder.R;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
 public class ProfileActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar) public Toolbar mToolbar;
-    //@BindView(R.id.list_view) public ListView mListView;
+    @BindView(R.id.recyclerview) public RecyclerView mRecyclerView;
     @BindView(R.id.user_name) public TextView mUserName;
     @BindView(R.id.telephone) public TextView mUserPhoneNumber;
-    //@BindView(R.id.greeting) public TextView mUserGreeting;
+
+    private ArrayList<RequestItem> mRequestItems = new ArrayList<>();
+    private RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView.Adapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +53,43 @@ public class ProfileActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setUpToolbar();
+        createList();
+        setUpAdapter();
+    }
+
+    private void createList() {
+        mRequestItems.add(new RequestItem(1,"Hi","Hi found", "dqwpokdqwkodpqkw"));
+        mRequestItems.add(new RequestItem(0,"Hi","Hi found", "dqwpokdqwkodpqkw"));
+        mRequestItems.add(new RequestItem(0,"Hi","Hi found", "dqwpokdqwkodpqkw"));
+        mRequestItems.add(new RequestItem(1,"His","His found", "dqwpokdqwkodpqkw"));
+        mRequestItems.add(new RequestItem(0,"Hib","Hiv found", "dqwpokdqwkodpqkw"));
+    }
+
+    private void setUpAdapter() {
+        mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        mAdapter = new MainTypeRequestAdapter(mRequestItems);
+
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
+
+        setUpTouchListener();
+    }
+
+    private void setUpTouchListener() {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
+                ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                mRequestItems.remove(((MainTypeRequestAdapter)mAdapter).getRequestAt(viewHolder.getAdapterPosition()));
+                mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+            }
+        }).attachToRecyclerView(mRecyclerView);
     }
 
     private void setUpToolbar() {

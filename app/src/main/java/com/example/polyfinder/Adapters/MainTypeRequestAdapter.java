@@ -49,6 +49,10 @@ public class MainTypeRequestAdapter extends RecyclerView.Adapter {
         return null;
     }
 
+    public RequestItem getRequestAt(int position){
+        return mRequestItems.get(position);
+    }
+
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         Requests item = mRequests.get(position);
