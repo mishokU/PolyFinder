@@ -12,6 +12,7 @@
     android:gravity="start"
     android:textAlignment="gravity"
     app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    app:titleTextAppearance="@style/Toolbar.TitleText">
+    app:titleTextAppearance="@style/Toolbar.TitleText"
+    android:elevation="3dp">
 
 </androidx.appcompat.widget.Toolbar>

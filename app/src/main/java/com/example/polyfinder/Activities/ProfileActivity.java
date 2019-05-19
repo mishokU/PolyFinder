@@ -27,6 +27,7 @@ import com.example.polyfinder.Adapters.MainTypeRequestAdapter;
 import com.example.polyfinder.Items.RequestItem;
 import com.example.polyfinder.R;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -119,6 +120,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void logOut() {
+        FirebaseAuth.getInstance().signOut();
         Intent activity = new Intent(this, SignInActivity.class);
         activity.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         startActivity(activity);

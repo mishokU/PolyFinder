@@ -43,4 +43,7 @@ public class FoundItemHolder extends RecyclerView.ViewHolder {
     public TextView getDescriptionView(){
         return description;
     }
+
+    public ImageView getImage() { return image;
+    }
 }

@@ -30,8 +30,8 @@
     <string name="telephone">+7854342344</string>
     <string name="user_name">Misha Usov</string>
     <string name="title">VLAD</string>
-    <string name="logout">LogOut</string>
-    <string name="settings">settings</string>
+    <string name="logout">Выйти</string>
+    <string name="settings">Настройки</string>
     <string name="do_filter">do_filter</string>
     <string name="create_request_swipe_right">Create Request? Swipe right</string>
     <string name="input_message_field">Message...</string>
