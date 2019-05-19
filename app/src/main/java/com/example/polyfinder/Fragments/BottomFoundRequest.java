@@ -1,4 +1,4 @@
-package com.example.polyfinder;
+package com.example.polyfinder.Fragments;
 
 import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.polyfinder.R;
 
 
 public class BottomFoundRequest extends Fragment implements View.OnClickListener{

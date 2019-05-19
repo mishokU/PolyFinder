@@ -1,4 +1,4 @@
-package com.example.polyfinder;
+package com.example.polyfinder.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.example.polyfinder.R;
 
 import java.util.ArrayList;
 import java.util.List;

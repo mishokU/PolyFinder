@@ -1,4 +1,4 @@
-package com.example.polyfinder;
+package com.example.polyfinder.Behaviors;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

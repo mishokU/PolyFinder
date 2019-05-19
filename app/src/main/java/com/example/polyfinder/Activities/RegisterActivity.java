@@ -1,9 +1,11 @@
-package com.example.polyfinder;
+package com.example.polyfinder.Activities;
 
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.polyfinder.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

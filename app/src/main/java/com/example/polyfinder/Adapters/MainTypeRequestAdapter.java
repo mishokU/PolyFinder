@@ -1,19 +1,32 @@
-package com.example.polyfinder;
+package com.example.polyfinder.Adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.polyfinder.Holders.FoundItemHolder;
+import com.example.polyfinder.Holders.LostItemHolder;
+import com.example.polyfinder.R;
+import com.example.polyfinder.Items.RequestItem;
 
 import java.util.ArrayList;
 
 public class MainTypeRequestAdapter extends RecyclerView.Adapter {
 
     private ArrayList<RequestItem> mRequestItems;
+    private OnItemClickListener mOnItemClickListener;
+
+    public interface OnItemClickListener{
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        mOnItemClickListener = listener;
+    }
 
     public MainTypeRequestAdapter(ArrayList<RequestItem> requestItems){
         this.mRequestItems = requestItems;
@@ -26,10 +39,10 @@ public class MainTypeRequestAdapter extends RecyclerView.Adapter {
         switch (viewType){
             case RequestItem.FOUND_ITEM:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.found_item, parent,false);
-                return new FoundItem(view);
+                return new FoundItemHolder(view,mOnItemClickListener);
             case RequestItem.LOST_ITEM:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lost_item, parent,false);
-                return new LostItem(view);
+                return new LostItemHolder(view,mOnItemClickListener);
         }
         return null;
     }
@@ -40,13 +53,13 @@ public class MainTypeRequestAdapter extends RecyclerView.Adapter {
         if(item != null){
             switch (item.getType()){
                 case RequestItem.FOUND_ITEM:
-                    ((FoundItem)holder).getTitleView().setText(item.getTitle());
-                    ((FoundItem) holder).getDescriptionView().setText(item.getDescription());
+                    ((FoundItemHolder)holder).getTitleView().setText(item.getTitle());
+                    ((FoundItemHolder) holder).getDescriptionView().setText(item.getDescription());
                     // Image
                     break;
                 case RequestItem.LOST_ITEM:
-                    ((LostItem) holder).getTitleView().setText(item.getTitle());
-                    ((LostItem) holder).getDescriptionView().setText(item.getDescription());
+                    ((LostItemHolder) holder).getTitleView().setText(item.getTitle());
+                    ((LostItemHolder) holder).getDescriptionView().setText(item.getDescription());
                     // Image
             }
         }

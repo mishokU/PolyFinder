@@ -14,7 +14,7 @@
         android:fullBackupContent="true">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,19 +23,25 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".RegisterActivity"
+        <activity android:name=".Activities.RegisterActivity"
             android:fitsSystemWindows="true">
 
         </activity>
         
-        <activity android:name=".SignInActivity"
+        <activity android:name=".Activities.SignInActivity"
             android:fitsSystemWindows="true">
 
         </activity>
 
-        <activity android:name=".ProfileActivity"
+        <activity android:name=".Activities.ProfileActivity"
             android:fitsSystemWindows="true"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".Activities.MainActivity"/>
+
+        <activity android:name=".Activities.ChatActivity"
+            android:parentActivityName=".Activities.MainActivity"/>
+
+        <activity android:name=".Activities.DialogsActivity"
+            android:parentActivityName=".Activities.MainActivity"/>
 
     </application>
 

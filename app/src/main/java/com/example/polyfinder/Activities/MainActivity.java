@@ -1,15 +1,12 @@
-package com.example.polyfinder;
+package com.example.polyfinder.Activities;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.view.KeyboardShortcutGroup;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Filter;
 import android.widget.Filterable;
@@ -20,19 +17,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.OrientationHelper;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.polyfinder.Adapters.BottomFragmentsAdapter;
+import com.example.polyfinder.Adapters.MainTypeRequestAdapter;
+import com.example.polyfinder.Fragments.BottomFoundRequest;
+import com.example.polyfinder.Fragments.BottomLostRequest;
+import com.example.polyfinder.Items.RequestItem;
+import com.example.polyfinder.R;
+import com.example.polyfinder.Fragments.SearchBottomFragment;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         SearchBottomFragment.Transmitter, Filterable {
@@ -41,8 +42,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.fab) public FloatingActionButton fab;
     @BindView(R.id.request_sheet) public NestedScrollView mRequestSheet;
     @BindView(R.id.request_pager) public ViewPager mRequestViewPager;
-
-
 
     @BindView(R.id.recyclerview) public RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -61,10 +60,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        createList();
         setRecyclerViewAdapter();
         setFragmentAdapters();
         setAllSheets();
         setUpViews();
+        addItem("Found","Hi","Hi found", "dqwpokdqwkodpqkw");
+    }
+
+    private void createList() {
+        mRequestItemList.add(new RequestItem(1,"Hi","Hi found", "dqwpokdqwkodpqkw"));
+        mRequestItemList.add(new RequestItem(0,"Hi","Hi found", "dqwpokdqwkodpqkw"));
+        mRequestItemList.add(new RequestItem(0,"Hi","Hi found", "dqwpokdqwkodpqkw"));
     }
 
 
@@ -73,18 +80,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Chose type
         int mType = 0;
         if(type.equals("Found")){
-            mType = RequestItem.LOST_ITEM;
-        }else {
             mType = RequestItem.FOUND_ITEM;
+        }else {
+            mType = RequestItem.LOST_ITEM;
         }
         //
-        mRequestItemList.add(new RequestItem(mType,title,description,imageURL));
+        mRequestItemList.add(0,new RequestItem(mType,title,description,imageURL));
     }
 
     private void setRecyclerViewAdapter() {
         mLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL,false);
         mAdapter = new MainTypeRequestAdapter(mRequestItemList);
+
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
+        ((MainTypeRequestAdapter) mAdapter).setOnItemClickListener(new MainTypeRequestAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Toast.makeText(MainActivity.this,"Clicked: " + position,Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void setFragmentAdapters() {
@@ -141,18 +159,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 showSearchFragment();
                 return true;
             case R.id.message:
-                launchActivity();
+                launchActivity(DialogsActivity.class);
                 return true;
             case R.id.profile:
-                launchActivity();
+                launchActivity(ProfileActivity.class);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    private void launchActivity() {
-        Intent intent = new Intent(this, ProfileActivity.class);
+    private void launchActivity(Class activity) {
+        Intent intent = new Intent(this, activity);
         startActivity(intent);
     }
 

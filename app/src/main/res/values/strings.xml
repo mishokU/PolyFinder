@@ -34,6 +34,7 @@
     <string name="settings">settings</string>
     <string name="do_filter">do_filter</string>
     <string name="create_request_swipe_right">Create Request? Swipe right</string>
+    <string name="input_message_field">Message...</string>
 
     <dimen name="image_width">120dp</dimen>
     <dimen name="image_final_width">32dp</dimen>

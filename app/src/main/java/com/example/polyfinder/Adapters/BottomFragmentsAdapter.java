@@ -1,4 +1,4 @@
-package com.example.polyfinder;
+package com.example.polyfinder.Adapters;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;

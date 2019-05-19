@@ -1,4 +1,4 @@
-package com.example.polyfinder;
+package com.example.polyfinder.Items;
 
 public class RequestItem {
 

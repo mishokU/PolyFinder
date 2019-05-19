@@ -1,5 +1,6 @@
-package com.example.polyfinder;
+package com.example.polyfinder.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -66,7 +67,11 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void logOut() {
-
+        Intent activity = new Intent(this, SignInActivity.class);
+        activity.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+        startActivity(activity);
+        finish();
+        overridePendingTransition(0,0);
     }
 
     private void openSettings() {

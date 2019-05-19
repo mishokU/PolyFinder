@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".Activities.MainActivity">
 
     <include
         android:id="@+id/toolbar"
@@ -39,7 +39,7 @@
         android:backgroundTint="@color/white"
         android:backgroundTintMode="add"
         android:src="@android:drawable/ic_input_add"
-        app:layout_behavior="com.example.polyfinder.ScrollBarBehavior" />
+        app:layout_behavior="com.example.polyfinder.Behaviors.ScrollBarBehavior" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/request_sheet"
