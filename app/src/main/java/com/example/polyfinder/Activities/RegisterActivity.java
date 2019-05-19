@@ -32,7 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+public class RegisterActivity extends AppCompatActivity {
 
     @BindView(R.id.register_email) public EditText email;
     @BindView(R.id.register_name) public EditText name;

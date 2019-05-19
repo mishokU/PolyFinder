@@ -49,8 +49,8 @@ public class MainTypeRequestAdapter extends RecyclerView.Adapter {
         return null;
     }
 
-    public RequestItem getRequestAt(int position){
-        return mRequestItems.get(position);
+    public Requests getRequestAt(int position){
+        return mRequests.get(position);
     }
 
     @Override

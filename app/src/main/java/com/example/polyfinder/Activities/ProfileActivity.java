@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.polyfinder.Adapters.DialogsAdapter;
 import com.example.polyfinder.Adapters.MainTypeRequestAdapter;
-import com.example.polyfinder.Items.RequestItem;
+import com.example.polyfinder.Items.Requests;
 import com.example.polyfinder.R;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,7 +42,7 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.user_name) public TextView mUserName;
     @BindView(R.id.telephone) public TextView mUserPhoneNumber;
 
-    private ArrayList<RequestItem> mRequestItems = new ArrayList<>();
+    private ArrayList<Requests> mRequestItems = new ArrayList<>();
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
 
@@ -53,16 +53,7 @@ public class ProfileActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setUpToolbar();
-        createList();
         setUpAdapter();
-    }
-
-    private void createList() {
-        mRequestItems.add(new RequestItem(1,"Hi","Hi found", "dqwpokdqwkodpqkw"));
-        mRequestItems.add(new RequestItem(0,"Hi","Hi found", "dqwpokdqwkodpqkw"));
-        mRequestItems.add(new RequestItem(0,"Hi","Hi found", "dqwpokdqwkodpqkw"));
-        mRequestItems.add(new RequestItem(1,"His","His found", "dqwpokdqwkodpqkw"));
-        mRequestItems.add(new RequestItem(0,"Hib","Hiv found", "dqwpokdqwkodpqkw"));
     }
 
     private void setUpAdapter() {
