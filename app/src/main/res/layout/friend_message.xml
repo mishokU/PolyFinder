@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,9 +12,11 @@
         android:orientation="horizontal">
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_marginStart="7dp"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
+            android:gravity="center_vertical|end"
             app:border_color="@color/friend_message_color"
             app:border_width="2dp"
             android:src="@drawable/quila2"/>
@@ -21,26 +24,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical|start"
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/friend_message"
                 android:id="@+id/friend_message"
-                android:layout_marginEnd="80dp"
-                android:padding="5dp"
+                android:padding="10dp"
+                android:layout_marginEnd="60dp"
                 android:layout_marginStart="5dp"
                 android:textColor="@color/white"
                 android:text="ekfekweofwekfwkwefkpepfkowepkofwfpwefepkwokfpowekfwepkfekewpkfwepkfwepfpewkfepwkfewpk
                 fewpfkepw"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/time"
+                android:layout_width="wrap_content"
+
+
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
                 android:layout_marginStart="5dp"
-                android:text="234352"/>
+                android:layout_marginEnd="60dp"
+                android:text="234352" />
 
         </LinearLayout>
 

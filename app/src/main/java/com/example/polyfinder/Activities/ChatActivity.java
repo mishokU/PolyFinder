@@ -50,8 +50,9 @@ public class ChatActivity extends AppCompatActivity {
 
     private void createList() {
         mChatItemList.add(new MessageItem("your_message","hi, my name is Misha","12:12"));
-        mChatItemList.add(new MessageItem("friend_message","hi, Misha","12:13"));
+
         mChatItemList.add(new MessageItem("your_message","What is your Name?","12:14"));
+        mChatItemList.add(new MessageItem("friend_message","hi, Misha ma name jeff my like sandwiches big very","12:13"));
         mChatItemList.add(new MessageItem("friend_message","My name is Anastasha","12:15"));
         mChatItemList.add(new MessageItem("your_message","hi, my name is Misha","12:12"));
         mChatItemList.add(new MessageItem("friend_message","hi, Misha","12:13"));
