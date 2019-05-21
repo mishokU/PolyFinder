@@ -191,6 +191,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bundle.putString("title", requests.getTitle());
         bundle.putString("description", requests.getDescription());
         bundle.putString("imageURL", requests.getImage());
+        bundle.putString("user_id",requests.getFrom());
 
         bottomProfileRequestDialog.setArguments(bundle);
         bottomProfileRequestDialog.show(getSupportFragmentManager(),"request");

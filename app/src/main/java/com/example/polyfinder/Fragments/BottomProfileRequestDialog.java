@@ -17,6 +17,14 @@ import com.example.polyfinder.Activities.MainActivity;
 import com.example.polyfinder.Holders.FoundItemHolder;
 import com.example.polyfinder.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 public class BottomProfileRequestDialog extends BottomSheetDialogFragment {
@@ -27,7 +35,13 @@ public class BottomProfileRequestDialog extends BottomSheetDialogFragment {
     private TextView description;
     private TextView user_name;
     private TextView user_phone;
+    private ImageView user_photo;
     private ImageView request_image;
+    private String user_id;
+
+    private DatabaseReference reference;
+    private FirebaseUser currentUser;
+    private StorageReference storageReference;
 
     @Nullable
     @Override
@@ -47,7 +61,40 @@ public class BottomProfileRequestDialog extends BottomSheetDialogFragment {
             setTitle(bundle.getString("title"));
             setDescription(bundle.getString("description"));
             setRequestImageURL(bundle.getString("imageURL"));
+            setUserID(bundle.getString("user_id"));
+
+            setUserData();
         }
+    }
+
+    private void setUserData() {
+        reference = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
+        storageReference = FirebaseStorage.getInstance().getReference();
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                String txt_name = dataSnapshot.child("username").getValue().toString();
+                String image = dataSnapshot.child("imageUrl").getValue().toString();
+                if(dataSnapshot.hasChild("phone")){
+                    String phone = dataSnapshot.child("phone").getValue().toString();
+                    setUserPhone(phone);
+                }
+
+                setUserName(txt_name);
+                Picasso.get().load(image).placeholder(R.mipmap.ic_launcher).into(user_photo);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void setUserName(String name) {
+        this.user_name.setText(name);
     }
 
     public void setTitle(String title){
@@ -58,8 +105,8 @@ public class BottomProfileRequestDialog extends BottomSheetDialogFragment {
         this.description.setText(description);
     }
 
-    public void setUserName(String name){
-        this.user_name.setText(name);
+    public void setUserID(String user_id){
+        this.user_id = user_id;
     }
 
     public void setUserPhone(String phone){
@@ -77,6 +124,7 @@ public class BottomProfileRequestDialog extends BottomSheetDialogFragment {
         user_name = view.findViewById(R.id.user_name);
         user_phone = view.findViewById(R.id.user_phone);
         request_image = view.findViewById(R.id.request_photo);
+        user_photo = view.findViewById(R.id.user_photo);
     }
 
     private void setOnClick() {

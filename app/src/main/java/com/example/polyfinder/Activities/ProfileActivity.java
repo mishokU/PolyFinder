@@ -67,6 +67,14 @@ public class ProfileActivity extends AppCompatActivity {
         setContentView(R.layout.profile_activity);
         ButterKnife.bind(this);
 
+        initFireBase();
+        loadData();
+
+        setUpToolbar();
+        setUpAdapter();
+    }
+
+    private void initFireBase() {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         assert currentUser != null;
         String user_id = currentUser.getUid();
@@ -74,11 +82,6 @@ public class ProfileActivity extends AppCompatActivity {
         reference = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
 
         storageReference = FirebaseStorage.getInstance().getReference();
-
-        loadData();
-
-        setUpToolbar();
-        setUpAdapter();
     }
 
     private void loadData() {
@@ -105,6 +108,8 @@ public class ProfileActivity extends AppCompatActivity {
 
             }
         });
+
+
     }
 
     private void setUpAdapter() {
