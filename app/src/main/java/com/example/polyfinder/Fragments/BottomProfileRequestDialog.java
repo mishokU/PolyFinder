@@ -14,8 +14,10 @@ import androidx.annotation.Nullable;
 
 import com.example.polyfinder.Activities.ChatActivity;
 import com.example.polyfinder.Activities.MainActivity;
+import com.example.polyfinder.Holders.FoundItemHolder;
 import com.example.polyfinder.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.squareup.picasso.Picasso;
 
 public class BottomProfileRequestDialog extends BottomSheetDialogFragment {
 
@@ -44,6 +46,7 @@ public class BottomProfileRequestDialog extends BottomSheetDialogFragment {
         if(bundle != null){
             setTitle(bundle.getString("title"));
             setDescription(bundle.getString("description"));
+            setRequestImageURL(bundle.getString("imageURL"));
         }
     }
 
@@ -63,8 +66,8 @@ public class BottomProfileRequestDialog extends BottomSheetDialogFragment {
         this.user_phone.setText(phone);
     }
 
-    public void setRequestImage(String image){
-        //this.request_image.setImageDrawable();
+    public void setRequestImageURL(String image){
+        Picasso.get().load(image).placeholder(R.mipmap.request_default).into(request_image);
     }
 
     private void findAllViews() {
@@ -73,7 +76,7 @@ public class BottomProfileRequestDialog extends BottomSheetDialogFragment {
         description = view.findViewById(R.id.description);
         user_name = view.findViewById(R.id.user_name);
         user_phone = view.findViewById(R.id.user_phone);
-        request_image = view.findViewById(R.id.request_image);
+        request_image = view.findViewById(R.id.request_photo);
     }
 
     private void setOnClick() {
