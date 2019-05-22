@@ -7,21 +7,16 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.polyfinder.Holders.FoundItemHolder;
 import com.example.polyfinder.Holders.FriendMessageHolder;
-import com.example.polyfinder.Holders.LostItemHolder;
 import com.example.polyfinder.Holders.YourMessageHolder;
-import com.example.polyfinder.Items.ChatItem;
-import com.example.polyfinder.Items.MessageItem;
-import com.example.polyfinder.Items.Requests;
+import com.example.polyfinder.Items.Messages;
 import com.example.polyfinder.R;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class ChatAdapter extends RecyclerView.Adapter {
 
-    private ArrayList<MessageItem> mMessages;
+    private ArrayList<Messages> mMessages;
     private OnItemClickListener mOnItemClickListener;
     private View view;
 
@@ -33,7 +28,7 @@ public class ChatAdapter extends RecyclerView.Adapter {
         mOnItemClickListener = listener;
     }
 
-    public ChatAdapter(ArrayList<MessageItem> messages){
+    public ChatAdapter(ArrayList<Messages> messages){
         this.mMessages = messages;
     }
 
@@ -41,10 +36,10 @@ public class ChatAdapter extends RecyclerView.Adapter {
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         switch (viewType){
-            case MessageItem.FRIEND_MESSAGE:
+            case Messages.FRIEND_MESSAGE:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.friend_message, parent, false);
                 return new FriendMessageHolder(view,mOnItemClickListener);
-            case MessageItem.YOUR_MESSAGE:
+            case Messages.YOUR_MESSAGE:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.your_message, parent, false);
                 return new YourMessageHolder(view,mOnItemClickListener);
 
@@ -54,16 +49,16 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        MessageItem messageItem = mMessages.get(position);
-        if(messageItem != null){
-            switch (messageItem.getType()){
+        Messages message = mMessages.get(position);
+        if(message != null){
+            switch (message.getType()){
                 case "your_message":
-                    ((YourMessageHolder) holder).getMessageView().setText(messageItem.getMessage());
-                    ((YourMessageHolder) holder).getTimeView().setText(messageItem.getTime());
+                    ((YourMessageHolder) holder).getMessageView().setText(message.getMessage());
+                    ((YourMessageHolder) holder).getTimeView().setText(message.getTime());
                     break;
                 case "friend_message":
-                    ((FriendMessageHolder) holder).getMessageView().setText(messageItem.getMessage());
-                    ((FriendMessageHolder) holder).getTimeView().setText(messageItem.getTime());
+                    ((FriendMessageHolder) holder).getMessageView().setText(message.getMessage());
+                    ((FriendMessageHolder) holder).getTimeView().setText(message.getTime());
                     break;
             }
         }
@@ -73,9 +68,9 @@ public class ChatAdapter extends RecyclerView.Adapter {
     public int getItemViewType(int position) {
         switch (mMessages.get(position).getType()){
             case "your_message":{
-                return MessageItem.YOUR_MESSAGE;}
+                return Messages.YOUR_MESSAGE;}
             case "friend_message":{
-                return MessageItem.FRIEND_MESSAGE;}
+                return Messages.FRIEND_MESSAGE;}
             default:{
                 return -1;}
         }
