@@ -23,6 +23,7 @@
     </View>
 
     <ImageView
+        android:id="@+id/close_fragment"
         android:layout_width="25dp"
         android:layout_height="15dp"
         android:layout_centerHorizontal="true"

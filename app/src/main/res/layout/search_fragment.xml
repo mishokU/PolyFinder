@@ -7,6 +7,7 @@
     android:layout_height="310dp">
 
     <ImageView
+        android:id="@+id/close_fragment"
         android:layout_width="25dp"
         android:layout_marginTop="10dp"
         android:layout_height="15dp"
@@ -106,30 +107,49 @@
         android:layout_gravity="center_vertical"
         android:textSize="14sp"/>
 
-    <androidx.appcompat.widget.AppCompatRadioButton
-        android:id="@+id/documents"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_margin="5dp"
-        android:layout_weight="1"
-        android:checked="false"
-        android:background="@drawable/type_selector"
-        android:scaleType="fitCenter"
-        android:button="@drawable/document_icon" />
+        <View
+            android:layout_height="wrap_content"
+            android:layout_width="0dip"
+            android:layout_weight="1">
+        </View>
 
-    <androidx.appcompat.widget.AppCompatRadioButton
+        <RadioButton
+            android:id="@+id/documents"
+            android:layout_width="wrap_content"
+            android:layout_height="45dp"
+            android:layout_margin="5dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/type_selector"
+            android:button="@drawable/document_icon"
+            android:checked="false" />
+
+        <View
+            android:layout_height="wrap_content"
+            android:layout_width="0dip"
+            android:layout_weight="1">
+        </View>
+
+    <RadioButton
         android:id="@+id/electronics"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_margin="5dp"
-        android:layout_weight="1"
         android:checked="false"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:background="@drawable/type_selector"
         android:scaleType="centerInside"
         android:button="@drawable/electronic_icon"
         android:buttonTintMode="add"/>
 
-    <androidx.appcompat.widget.AppCompatRadioButton
+        <View
+            android:layout_height="wrap_content"
+            android:layout_width="0dip"
+            android:layout_weight="1">
+        </View>
+
+    <RadioButton
         android:id="@+id/eat"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
@@ -137,10 +157,17 @@
         android:background="@drawable/type_selector"
         android:button="@drawable/eat_icon"
         android:checked="false"
-        android:scaleType="centerInside"
-        android:layout_weight="1"/>
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:scaleType="centerInside" />
 
-    <androidx.appcompat.widget.AppCompatRadioButton
+        <View
+            android:layout_height="wrap_content"
+            android:layout_width="0dip"
+            android:layout_weight="1">
+        </View>
+
+    <RadioButton
         android:id="@+id/clothing"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
@@ -148,19 +175,32 @@
         android:background="@drawable/type_selector"
         android:button="@drawable/clothing_icon"
         android:checked="false"
-        android:scaleType="centerInside"
-        android:layout_weight="1"/>
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:scaleType="centerInside" />
 
-    <androidx.appcompat.widget.AppCompatRadioButton
+        <View
+            android:layout_height="wrap_content"
+            android:layout_width="0dip"
+            android:layout_weight="1">
+        </View>
+
+    <RadioButton
         android:id="@+id/others"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
-        android:scaleType="centerInside"
         android:checked="false"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:layout_margin="5dp"
         android:background="@drawable/type_selector"
-        android:button="@drawable/other_icno"
-        android:layout_weight="1"/>
+        android:button="@drawable/other_icno" />
+
+        <View
+            android:layout_height="wrap_content"
+            android:layout_width="0dip"
+            android:layout_weight="1">
+        </View>
 
     </RadioGroup>
 

@@ -28,6 +28,7 @@ import com.example.polyfinder.Fragments.BottomProfileRequestDialog;
 import com.example.polyfinder.Items.Requests;
 import com.example.polyfinder.R;
 import com.example.polyfinder.Fragments.SearchBottomFragment;
+import com.example.polyfinder.Transmitter;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -46,7 +47,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
-        SearchBottomFragment.Transmitter, Filterable {
+        Transmitter, Filterable {
 
     @BindView(R.id.toolbar) public Toolbar toolbar;
     @BindView(R.id.fab) public FloatingActionButton fab;
@@ -290,6 +291,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mCategory = category;
         mType = type;
         mSearch = search;
+    }
+
+    @Override
+    public void OnCloseSend(Boolean isClose) {
+        if(isClose){
+            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        }
     }
 
     @Override

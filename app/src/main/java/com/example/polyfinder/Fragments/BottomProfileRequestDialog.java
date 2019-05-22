@@ -1,5 +1,6 @@
 package com.example.polyfinder.Fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.example.polyfinder.Activities.ChatActivity;
 import com.example.polyfinder.Activities.MainActivity;
 import com.example.polyfinder.Holders.FoundItemHolder;
 import com.example.polyfinder.R;
+import com.example.polyfinder.Transmitter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,6 +40,8 @@ public class BottomProfileRequestDialog extends BottomSheetDialogFragment {
     private ImageView user_photo;
     private ImageView request_image;
     private String user_id;
+    private Transmitter transmitter;
+    private ImageView mCloseFragment;
 
     private DatabaseReference reference;
     private FirebaseUser currentUser;
@@ -125,6 +129,7 @@ public class BottomProfileRequestDialog extends BottomSheetDialogFragment {
         user_phone = view.findViewById(R.id.user_phone);
         request_image = view.findViewById(R.id.request_photo);
         user_photo = view.findViewById(R.id.user_photo);
+        mCloseFragment = view.findViewById(R.id.close_fragment);
     }
 
     private void setOnClick() {
@@ -136,5 +141,28 @@ public class BottomProfileRequestDialog extends BottomSheetDialogFragment {
                 startActivity(intent);
             }
         });
+        mCloseFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                transmitter.OnCloseSend(true);
+            }
+        });
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if(context instanceof Transmitter) {
+            transmitter = (Transmitter) context;
+        } else{
+            throw new RuntimeException(context.toString()
+                    + "must implement Transmitter");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        transmitter = null;
     }
 }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -16,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.polyfinder.R;
+import com.example.polyfinder.Transmitter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,16 +29,12 @@ public class SearchBottomFragment extends Fragment
     private EditText mSearchText;
     private RadioGroup mRequestGroup;
     private RadioGroup mCategotyGroup;
+    private ImageView mCloseFragment;
     private Button mFilterButton;
     private String mRequestType;
     private String mCategotyType;
 
     private Transmitter transmitter;
-
-    public interface Transmitter {
-        public void onDataSend(String type,String category,String search);
-    }
-
 
     @Nullable
     @Override
@@ -54,7 +52,7 @@ public class SearchBottomFragment extends Fragment
         mSearchText = mView.findViewById(R.id.search_text);
         mRequestGroup = mView.findViewById(R.id.request_group);
         mCategotyGroup = mView.findViewById(R.id.categoty_group);
-
+        mCloseFragment = mView.findViewById(R.id.close_fragment);
         mFilterButton = mView.findViewById(R.id.do_filter);
     }
 
@@ -67,6 +65,12 @@ public class SearchBottomFragment extends Fragment
             @Override
             public void onClick(View v) {
                 doFilter();
+            }
+        });
+        mCloseFragment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                transmitter.OnCloseSend(true);
             }
         });
     }

@@ -7,4 +7,9 @@
     <item android:drawable="@drawable/sort_rounded"
         android:state_checked="false"/>
 
+    <item>
+        <bitmap
+            android:src="@drawable/electronic_icon"
+            android:gravity="center"/>
+    </item>
 </selector>
