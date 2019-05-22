@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -24,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.polyfinder.Adapters.DialogsAdapter;
 import com.example.polyfinder.Adapters.MainTypeRequestAdapter;
+import com.example.polyfinder.Fragments.ProfilePhotoBottomFragment;
 import com.example.polyfinder.Items.Requests;
 import com.example.polyfinder.R;
 import com.google.android.material.appbar.AppBarLayout;
@@ -52,6 +54,7 @@ public class ProfileActivity extends AppCompatActivity {
     @BindView(R.id.user_name) public TextView userName;
     @BindView(R.id.telephone) public TextView userPhoneNumber;
     @BindView(R.id.profile_image) public CircleImageView profileImage;
+    @BindView(R.id.change_photo) public de.hdodenhof.circleimageview.CircleImageView change_photo_button;
 
     private ArrayList<Requests> mRequestItems = new ArrayList<>();
     private RecyclerView.LayoutManager mLayoutManager;
@@ -70,8 +73,19 @@ public class ProfileActivity extends AppCompatActivity {
         initFireBase();
         loadData();
 
+        setOnClicks();
         setUpToolbar();
         setUpAdapter();
+    }
+
+    private void setOnClicks() {
+        change_photo_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProfilePhotoBottomFragment profilePhotoBottomFragment = new ProfilePhotoBottomFragment();
+                profilePhotoBottomFragment.show(getSupportFragmentManager(),"settings");
+            }
+        });
     }
 
     private void initFireBase() {

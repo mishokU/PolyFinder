@@ -24,4 +24,5 @@
 
     <color name="friend_message_color">#A573FF</color>
     <color name="rounded_message_color">#78DFBE</color>
+    <color name="red">#FF4A52</color>
 </resources>
