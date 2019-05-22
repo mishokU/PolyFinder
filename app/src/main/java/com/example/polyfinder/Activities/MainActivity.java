@@ -108,9 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void createList() {
         loadRequests();
        mRequestsList.add(new Requests("found","Hi","Hi found", "dqwpokdqwkodpqkw"));
-        System.out.println(mRequestsList.size()+ "MAYBE YOU CRY PISS YOUR PANTS MAYBE");
-       // mRequestsList.add(new Requests(0,"Hi","Hi found", "dqwpokdqwkodpqkw"));
-       // mRequestsList.add(new Requests(0,"Hi","Hi found", "dqwpokdqwkodpqkw"));
+
     }
 
     private void loadRequests(){
@@ -119,16 +117,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Requests request = dataSnapshot.getValue(Requests.class);
                 System.out.println(dataSnapshot.getKey() + "REQUEST FROM DATABASE");
-                //String type = request.getType();
-                //String title = request.getTitle();
-                //String description = request.getDescription();
-                //String image = request.getImage();
-                //if(type.equals("found")){
-                    //addItem(type, title, description, image);
-                //mRequestsList.add(new Requests("found","Hi","Hi found", "pepe"));
+
                     addItem(request);
                     mAdapter.notifyDataSetChanged();
-                //}
             }
 
             @Override

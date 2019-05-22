@@ -1,6 +1,6 @@
 package com.example.polyfinder.Items;
 
-public class MessageItem {
+public class Messages {
 
     public static final int YOUR_MESSAGE = 0;
     public static final int FRIEND_MESSAGE = 1;
@@ -8,15 +8,22 @@ public class MessageItem {
     private String message;
     private String time;
     private String type;
+    public String from;
 
-    public MessageItem(String type,String message,String time){
+    public Messages(){}
+
+    public Messages(String from, String message, String time){
         this.message = message;
         this.time = time;
-        this.type = type;
+        this.from = from;
     }
 
     public String getMessage(){
         return message;
+    }
+
+    public String getFrom() {
+        return from;
     }
 
     public String getTime(){
@@ -24,4 +31,8 @@ public class MessageItem {
     }
 
     public String getType() {return  type;}
+
+    public void setType(String type){
+        this.type = type;
+    }
 }

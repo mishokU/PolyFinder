@@ -2,25 +2,33 @@ package com.example.polyfinder.Items;
 
 public class DialogItem {
 
-    private String user_name;
-    private String message;
-    private String image_url;
+    private String userName;
+    private String lastMessage;
+    private String userImage;
+    private String userId;
 
-    public DialogItem(String user_name,String message, String image_url){
-        this.user_name = user_name;
-        this.message = message;
-        this.image_url = image_url;
+    public DialogItem(){}
+
+    public DialogItem(String userName,String lastMessage, String userImage, String userId){
+        this.userName = userName;
+        this.lastMessage = lastMessage;
+        this.userImage = userImage;
+        this.userId = userId;
     }
 
     public String getUserName(){
-        return user_name;
+        return userName;
     }
 
-    public String getMessage(){
-        return message;
+    public String getLastMessage(){
+        return lastMessage;
     }
 
-    public String getImageUrl(){
-        return image_url;
+    public String getUserImage(){
+        return userImage;
+    }
+
+    public String getUserId() {
+        return userId;
     }
 }

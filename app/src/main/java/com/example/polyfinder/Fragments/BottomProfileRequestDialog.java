@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +20,7 @@ import com.example.polyfinder.Holders.FoundItemHolder;
 import com.example.polyfinder.R;
 import com.example.polyfinder.Transmitter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,13 +46,18 @@ public class BottomProfileRequestDialog extends BottomSheetDialogFragment {
     private ImageView mCloseFragment;
 
     private DatabaseReference reference;
-    private FirebaseUser currentUser;
+    private String currentUser;
     private StorageReference storageReference;
+
+    private String chat_user_name;
+    private String chat_thumb_image;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.profile_fragment, container, false);
+
+        currentUser = FirebaseAuth.getInstance().getUid();
 
         findAllViews();
         setOnClick();
@@ -79,15 +86,15 @@ public class BottomProfileRequestDialog extends BottomSheetDialogFragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                String txt_name = dataSnapshot.child("username").getValue().toString();
-                String image = dataSnapshot.child("imageUrl").getValue().toString();
+                chat_user_name = dataSnapshot.child("username").getValue().toString();
+                chat_thumb_image = dataSnapshot.child("imageUrl").getValue().toString();
                 if(dataSnapshot.hasChild("phone")){
                     String phone = dataSnapshot.child("phone").getValue().toString();
                     setUserPhone(phone);
                 }
 
-                setUserName(txt_name);
-                Picasso.get().load(image).placeholder(R.mipmap.ic_launcher).into(user_photo);
+                setUserName(chat_user_name);
+                Picasso.get().load(chat_thumb_image).placeholder(R.mipmap.ic_launcher).into(user_photo);
             }
 
             @Override
@@ -136,9 +143,18 @@ public class BottomProfileRequestDialog extends BottomSheetDialogFragment {
         communicate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ChatActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-                startActivity(intent);
+                if(currentUser.equals(user_id)){
+                    Toast.makeText(getContext(),"НЕВОЗМОЖНО СОЗДАТЬ ЧАТ" ,Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Intent intent = new Intent(getActivity(), ChatActivity.class);
+                    intent.putExtra("user_id", user_id);
+                    intent.putExtra("user_name", chat_user_name);
+                    intent.putExtra("user_image", chat_thumb_image);
+
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                    startActivity(intent);
+                }
             }
         });
         mCloseFragment.setOnClickListener(new View.OnClickListener() {

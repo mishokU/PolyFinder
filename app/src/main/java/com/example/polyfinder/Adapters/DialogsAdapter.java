@@ -41,7 +41,7 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogItemHolder> {
     public void onBindViewHolder(@NonNull DialogItemHolder holder, int position) {
         DialogItem dialogItem = mDialogItems.get(position);
         //(DialogItemHolder) holder.getImageView().setImageBitmap();
-        holder.getMessageView().setText(dialogItem.getMessage());
+        holder.getMessageView().setText(dialogItem.getLastMessage());
         holder.getUserNameView().setText(dialogItem.getUserName());
     }
 
