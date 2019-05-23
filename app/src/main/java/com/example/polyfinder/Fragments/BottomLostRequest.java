@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -36,7 +37,7 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
     private RelativeLayout mTypePlace;
     private ConstraintLayout mTextPlace;
     private RadioGroup mRadioGroup;
-    private String mCategotyType;
+    private String mCategoryType;
 
     private boolean isOpen = true;
 
@@ -63,6 +64,7 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
                 openTypeMenu();
             }
         });
+        mRadioGroup.setOnCheckedChangeListener(this);
     }
 
     private void findViews() {
@@ -150,19 +152,20 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
         if(group == mRadioGroup){
             switch (checkedId) {
                 case R.id.documents:
-                    mCategotyType = "Documents";
+                    mCategoryType = "Documents";
+                    Toast.makeText(getActivity(),"Documents",Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.electronics:
-                    mCategotyType = "Electronics";
+                    mCategoryType = "Electronics";
                     break;
                 case R.id.others:
-                    mCategotyType = "Others";
+                    mCategoryType = "Others";
                     break;
                 case R.id.eat:
-                    mCategotyType = "Eat";
+                    mCategoryType = "Eat";
                     break;
                 case R.id.clothing:
-                    mCategotyType = "Clothing";
+                    mCategoryType = "Clothing";
                     break;
             }
         }
