@@ -52,17 +52,18 @@
             app:layout_constraintStart_toStartOf="@+id/description"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
+        <ImageView
             android:id="@+id/type"
             android:layout_width="65dp"
             android:layout_height="45dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="4dp"
             android:background="@drawable/bg_edit_text_request"
+            android:gravity="top|center_horizontal"
             android:src="@drawable/down_arrow"
             android:text="Тип"
+            android:scaleType="fitCenter"
             android:textAlignment="gravity"
-            android:gravity="top|center_horizontal"
             android:textColor="@color/white"
             android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@+id/description"
