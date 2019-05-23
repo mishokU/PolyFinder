@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -26,7 +27,7 @@ import com.example.polyfinder.R;
 import com.example.polyfinder.Transmitter;
 
 
-public class BottomFoundRequest extends Fragment{
+public class BottomFoundRequest extends Fragment implements RadioGroup.OnCheckedChangeListener{
 
     private View view;
     private EditText mTitle;
@@ -37,7 +38,8 @@ public class BottomFoundRequest extends Fragment{
     private Transmitter transmitter;
     private RelativeLayout mTypePlace;
     private androidx.constraintlayout.widget.ConstraintLayout mTextPlace;
-    //private Type type;
+    private RadioGroup mRadioGroup;
+    private String mCategotyType;
     //private Image image;
 
     private boolean isOpen = true;
@@ -78,29 +80,6 @@ public class BottomFoundRequest extends Fragment{
             Animator anim = ViewAnimationUtils.createCircularReveal(mTypePlace, x, y, startRadius, endRadius);
             anim.setDuration(1000);
             mTypePlace.setVisibility(View.VISIBLE);
-            anim.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mTitle.setVisibility(View.INVISIBLE);
-                    mDescription.setVisibility(View.INVISIBLE);
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-
-                }
-            });
-
             anim.start();
 
             isOpen = false;
@@ -117,8 +96,7 @@ public class BottomFoundRequest extends Fragment{
             anim.addListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animator) {
-                    mTitle.setVisibility(View.VISIBLE);
-                    mDescription.setVisibility(View.VISIBLE);
+
                 }
 
                 @Override
@@ -149,6 +127,7 @@ public class BottomFoundRequest extends Fragment{
         mType = view.findViewById(R.id.type);
         mTextPlace = view.findViewById(R.id.text_place);
         mTypePlace = view.findViewById(R.id.type_place);
+        mRadioGroup = view.findViewById(R.id.radio_group);
     }
 
     @Override
@@ -166,5 +145,28 @@ public class BottomFoundRequest extends Fragment{
     public void onDetach() {
         super.onDetach();
         transmitter = null;
+    }
+
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        if(group == mRadioGroup){
+            switch (checkedId) {
+                case R.id.documents:
+                    mCategotyType = "Documents";
+                    break;
+                case R.id.electronics:
+                    mCategotyType = "Electronics";
+                    break;
+                case R.id.others:
+                    mCategotyType = "Others";
+                    break;
+                case R.id.eat:
+                    mCategotyType = "Eat";
+                    break;
+                case R.id.clothing:
+                    mCategotyType = "Clothing";
+                    break;
+            }
+        }
     }
 }

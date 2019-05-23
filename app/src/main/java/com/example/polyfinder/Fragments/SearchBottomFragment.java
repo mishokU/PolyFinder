@@ -32,7 +32,7 @@ public class SearchBottomFragment extends Fragment
     private ImageView mCloseFragment;
     private Button mFilterButton;
     private String mRequestType;
-    private String mCategotyType;
+    private String mCategoryType;
 
     private Transmitter transmitter;
 
@@ -76,7 +76,7 @@ public class SearchBottomFragment extends Fragment
     }
 
     private void doFilter() {
-        transmitter.onDataSend(mRequestType,mCategotyType,mSearchText.getText().toString());
+        transmitter.onDataSend(mRequestType,mCategoryType,mSearchText.getText().toString());
     }
 
     @Override
@@ -99,19 +99,19 @@ public class SearchBottomFragment extends Fragment
         if(group == mCategotyGroup){
             switch (checkedId) {
                 case R.id.documents:
-                    mCategotyType = "Documents";
+                    mCategoryType = "Documents";
                     break;
                 case R.id.electronics:
-                    mCategotyType = "Electronics";
+                    mCategoryType = "Electronics";
                     break;
                 case R.id.others:
-                    mCategotyType = "Others";
+                    mCategoryType = "Others";
                     break;
                 case R.id.eat:
-                    mCategotyType = "Eat";
+                    mCategoryType = "Eat";
                     break;
                 case R.id.clothing:
-                    mCategotyType = "Clothing";
+                    mCategoryType = "Clothing";
                     break;
             }
         }

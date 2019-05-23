@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,7 +22,7 @@ import com.example.polyfinder.R;
 import com.example.polyfinder.Transmitter;
 
 
-public class BottomLostRequest extends Fragment {
+public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedChangeListener {
 
     private View view;
     private RelativeLayout mainRelative;
@@ -34,6 +35,8 @@ public class BottomLostRequest extends Fragment {
     private Button mType;
     private RelativeLayout mTypePlace;
     private ConstraintLayout mTextPlace;
+    private RadioGroup mRadioGroup;
+    private String mCategotyType;
 
     private boolean isOpen = true;
 
@@ -71,6 +74,7 @@ public class BottomLostRequest extends Fragment {
         mType = view.findViewById(R.id.type);
         mTextPlace = view.findViewById(R.id.text_place);
         mTypePlace = view.findViewById(R.id.type_place);
+        mRadioGroup = view.findViewById(R.id.radio_group);
     }
 
     private void openTypeMenu() {
@@ -84,29 +88,6 @@ public class BottomLostRequest extends Fragment {
             Animator anim = ViewAnimationUtils.createCircularReveal(mTypePlace, x, y, startRadius, endRadius);
             anim.setDuration(1000);
             mTypePlace.setVisibility(View.VISIBLE);
-            anim.addListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mTitle.setVisibility(View.INVISIBLE);
-                    mDescription.setVisibility(View.INVISIBLE);
-                }
-
-                @Override
-                public void onAnimationCancel(Animator animation) {
-
-                }
-
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-
-                }
-            });
-
             anim.start();
 
             isOpen = false;
@@ -123,8 +104,7 @@ public class BottomLostRequest extends Fragment {
             anim.addListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animator) {
-                    mTitle.setVisibility(View.VISIBLE);
-                    mDescription.setVisibility(View.VISIBLE);
+
                 }
 
                 @Override
@@ -165,4 +145,26 @@ public class BottomLostRequest extends Fragment {
         transmitter = null;
     }
 
+    @Override
+    public void onCheckedChanged(RadioGroup group, int checkedId) {
+        if(group == mRadioGroup){
+            switch (checkedId) {
+                case R.id.documents:
+                    mCategotyType = "Documents";
+                    break;
+                case R.id.electronics:
+                    mCategotyType = "Electronics";
+                    break;
+                case R.id.others:
+                    mCategotyType = "Others";
+                    break;
+                case R.id.eat:
+                    mCategotyType = "Eat";
+                    break;
+                case R.id.clothing:
+                    mCategotyType = "Clothing";
+                    break;
+            }
+        }
+    }
 }
