@@ -82,13 +82,13 @@ public class MainTypeRequestAdapter extends RecyclerView.Adapter {
     public int getItemViewType(int position) {
         switch (mRequests.get(position).getType()){
             case "lost":{
-                System.out.println("ADDING LOST ITEM "+ mRequests.get(position).getDescription());
+                //System.out.println("ADDING LOST ITEM "+ mRequests.get(position).getDescription());
                 return Requests.LOST_ITEM;}
             case "found":{
-                System.out.println("ADDING FOUND ITEM "+ mRequests.get(position).getDescription());
+                //System.out.println("ADDING FOUND ITEM "+ mRequests.get(position).getDescription());
                 return Requests.FOUND_ITEM;}
             default:{
-                System.out.println("NOT ADDING ITEM "+ mRequests.get(position).getDescription());
+                //System.out.println("NOT ADDING ITEM "+ mRequests.get(position).getDescription());
 
                 return -1;}
         }
