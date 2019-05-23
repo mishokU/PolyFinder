@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onItemClick(int position) {
                 openFullRequest(mRequestsList.get(position));
-                Toast.makeText(MainActivity.this,"Clicked: " + position,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(MainActivity.this,"Clicked: " + position,Toast.LENGTH_SHORT).show();
             }
         });
 

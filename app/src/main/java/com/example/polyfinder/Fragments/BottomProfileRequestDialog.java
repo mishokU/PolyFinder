@@ -59,6 +59,8 @@ public class BottomProfileRequestDialog extends BottomSheetDialogFragment {
 
         currentUser = FirebaseAuth.getInstance().getUid();
 
+
+
         findAllViews();
         setOnClick();
         getDataFromView();
@@ -129,7 +131,12 @@ public class BottomProfileRequestDialog extends BottomSheetDialogFragment {
     }
 
     private void findAllViews() {
+        setUserID(getArguments().getString("user_id"));
+
         communicate = view.findViewById(R.id.communicate_button);
+        if(currentUser.equals(user_id)) {
+            communicate.setVisibility(View.INVISIBLE);
+        }
         title = view.findViewById(R.id.title);
         description = view.findViewById(R.id.description);
         user_name = view.findViewById(R.id.user_name);
