@@ -7,7 +7,7 @@
 
     <include
         android:id="@+id/toolbar"
-        layout="@layout/toolbar"/>
+        layout="@layout/toolbar_for_all"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

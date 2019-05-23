@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String mSearch;
 
     private BottomSheetBehavior mBottomSheetBehavior;
+    private BottomProfileRequestDialog bottomProfileRequestDialog;
 
     private FirebaseAuth mAuth;
     private DatabaseReference reference;
@@ -177,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void openFullRequest(Requests requests) {
-        BottomProfileRequestDialog bottomProfileRequestDialog = new BottomProfileRequestDialog();
+        bottomProfileRequestDialog = new BottomProfileRequestDialog();
         Bundle bundle = new Bundle();
 
         bundle.putString("title", requests.getTitle());
@@ -288,6 +289,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void OnCloseSend(Boolean isClose) {
         if(isClose){
             mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+            bottomProfileRequestDialog.dismiss();
         }
     }
 

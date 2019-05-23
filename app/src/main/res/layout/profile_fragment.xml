@@ -11,7 +11,7 @@
         android:id="@+id/request_photo"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_margin="5dp"
+        android:layout_margin="15dp"
         app:border_width="5dp"
         app:border_color="@color/request_end" />
 

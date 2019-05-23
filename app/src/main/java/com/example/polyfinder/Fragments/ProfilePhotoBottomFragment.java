@@ -20,6 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 public class ProfilePhotoBottomFragment extends BottomSheetDialogFragment {
 
     private View view;
+    private ImageView mCloseFragment;
     private LinearLayout mTakePhoto;
     private LinearLayout mUploadPhoto;
     private LinearLayout mDeletePhoto;

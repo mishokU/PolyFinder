@@ -150,6 +150,7 @@ public class BottomProfileRequestDialog extends BottomSheetDialogFragment {
         communicate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                transmitter.OnCloseSend(true);
                 if(currentUser.equals(user_id)){
                     Toast.makeText(getContext(),"НЕВОЗМОЖНО СОЗДАТЬ ЧАТ" ,Toast.LENGTH_SHORT).show();
                 }
@@ -164,6 +165,7 @@ public class BottomProfileRequestDialog extends BottomSheetDialogFragment {
                 }
             }
         });
+
         mCloseFragment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
