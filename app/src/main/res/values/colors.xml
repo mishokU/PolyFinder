@@ -14,6 +14,7 @@
     <color name="request_center">#2BC3B4</color>
     <color name="request_center2">#9940DB94</color>
     <color name="request_start">#B33FDDBB</color>
+    <color name="colorCrop">#B33FDDBB</color>
     <color name="bg_edit_text_request">#00695C</color>
     <color name="text_request">#BDBBBB</color>
     <color name="swipe">#333333</color>
