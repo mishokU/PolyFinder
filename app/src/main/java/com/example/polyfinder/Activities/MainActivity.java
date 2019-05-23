@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Requests request = dataSnapshot.getValue(Requests.class);
-                System.out.println(dataSnapshot.getKey() + "REQUEST FROM DATABASE");
+                //System.out.println(dataSnapshot.getKey() + "REQUEST FROM DATABASE");
 
                     addItem(request);
                     mAdapter.notifyDataSetChanged();

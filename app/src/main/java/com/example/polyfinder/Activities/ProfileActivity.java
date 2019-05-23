@@ -15,7 +15,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -31,11 +30,13 @@ import com.example.polyfinder.R;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.annotations.Nullable;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -61,8 +62,10 @@ public class ProfileActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
 
     private DatabaseReference reference;
+    private DatabaseReference requestDatabase;
     private FirebaseUser currentUser;
     private StorageReference storageReference;
+    private String currentUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +79,8 @@ public class ProfileActivity extends AppCompatActivity {
         setOnClicks();
         setUpToolbar();
         setUpAdapter();
+
+        loadRequests();
     }
 
     private void setOnClicks() {
@@ -91,9 +96,10 @@ public class ProfileActivity extends AppCompatActivity {
     private void initFireBase() {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         assert currentUser != null;
-        String user_id = currentUser.getUid();
+        currentUserId = currentUser.getUid();
 
-        reference = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id);
+        reference = FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId);
+        requestDatabase = FirebaseDatabase.getInstance().getReference().child("Requests");
 
         storageReference = FirebaseStorage.getInstance().getReference();
     }
@@ -124,6 +130,54 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    private void loadRequests(){
+        requestDatabase.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @com.google.firebase.database.annotations.Nullable String s) {
+                Requests request = dataSnapshot.getValue(Requests.class);
+                //System.out.println(dataSnapshot.getKey() + "REQUEST FROM DATABASE");
+                if(request.getFrom().equals(currentUserId)) {
+                    addItem(request);
+                }
+                mAdapter.notifyDataSetChanged();
+                System.out.println(mRequestItems.size() + "SIZEEEE");
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @com.google.firebase.database.annotations.Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void addItem(Requests request){//(String type,String title,String description,String imageURL){
+
+        //Chose type
+        int mType = 0;
+        if(request.getType().equals("found")){
+            mType = Requests.FOUND_ITEM;
+        }else {
+            mType = Requests.LOST_ITEM;
+        }
+        //
+        mRequestItems.add(0, request);//new Requests(type, title,description,imageURL)
     }
 
     private void setUpAdapter() {
