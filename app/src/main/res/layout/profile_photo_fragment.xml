@@ -18,7 +18,7 @@
     <TextView
         android:id="@+id/text_choose"
         android:text="@string/choose_photo"
-        android:textSize="32sp"
+        android:textSize="22sp"
         android:paddingStart="15dp"
         android:paddingEnd="15dp"
         android:layout_marginBottom="5dp"
@@ -32,8 +32,8 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_margin="10dp"
             app:srcCompat="@android:drawable/ic_menu_camera" />
 
@@ -44,7 +44,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:textSize="24sp"/>
+            android:textSize="18sp"/>
 
     </LinearLayout>
 
@@ -56,8 +56,8 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_margin="10dp"
             app:srcCompat="@android:drawable/ic_menu_gallery"/>
 
@@ -68,7 +68,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:textSize="24sp"/>
+            android:textSize="18sp"/>
 
     </LinearLayout>
 
@@ -79,8 +79,8 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_margin="10dp"
             app:srcCompat="@drawable/ic_action_remove_photo" />
 
@@ -92,7 +92,7 @@
             android:textColor="@color/red"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:textSize="24sp"/>
+            android:textSize="18sp"/>
 
     </LinearLayout>
 
