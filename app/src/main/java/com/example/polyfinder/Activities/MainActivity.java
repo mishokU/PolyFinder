@@ -42,6 +42,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,10 +59,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<Requests> mRequestsList = new ArrayList<>();
-
-    private String mCategory;
-    private String mType;
-    private String mSearch;
+    private ArrayList<Requests> mFullRequests = new ArrayList<>();
 
     private BottomSheetBehavior mBottomSheetBehavior;
     private BottomProfileRequestDialog bottomProfileRequestDialog;
@@ -104,12 +102,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent startIntent = new Intent(MainActivity.this, RegisterActivity.class);
         startActivity(startIntent);
         finish();
-    }
-
-    private void createList() {
-        loadRequests();
-       mRequestsList.add(new Requests("found","Hi","Hi found", "dqwpokdqwkodpqkw"));
-
     }
 
     private void loadRequests(){
@@ -157,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         //
         mRequestsList.add(0, request);//new Requests(type, title,description,imageURL)
+        mFullRequests.add(0,request);
     }
 
     private void setRecyclerViewAdapter() {
@@ -279,9 +272,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onDataSend(String type, String category, String search) {
-        mCategory = category;
-        mType = type;
-        mSearch = search;
+        getFilter().filter(type + " " + category + " " + search);
+        mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
 
     @Override
@@ -294,6 +286,74 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public Filter getFilter() {
-        return null;
+        return mainTapeFilter;
     }
+
+    private Filter mainTapeFilter = new Filter() {
+
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<Requests> filteredList = new ArrayList<>();
+            if(constraint == null || constraint.length() == 0 || constraint.equals("All")){
+                filteredList.addAll(mFullRequests);
+            } else {
+
+                String[] filterPattern = constraint.toString().toLowerCase().split(" ");
+
+                if (filterPattern.length == 1) {
+                    for (Requests request : mFullRequests) {
+                        if (request.getTitle().toLowerCase().equals(filterPattern[0]) ||
+                                request.getDescription().toLowerCase().equals(filterPattern[0]) ||
+                                request.getCategory().toLowerCase().equals(filterPattern[0]) ||
+                                request.getType().toLowerCase().equals(filterPattern[0])) {
+                            filteredList.add(request);
+                        }
+                    }
+                } else if (filterPattern.length == 2) {
+                    List<Requests> tmpTypeList = new ArrayList<>();
+                    for (Requests request : mFullRequests) {
+                        if (request.getType().toLowerCase().equals(filterPattern[0])) {
+                            tmpTypeList.add(request);
+                        }
+                    }
+
+                    for (Requests request : tmpTypeList) {
+                        if (request.getCategory().toLowerCase().equals(filterPattern[1])) {
+                            filteredList.add(request);
+                        }
+                    }
+                } else if(filterPattern.length == 3){
+                    List<Requests> tmpTypeList = new ArrayList<>();
+                    for (Requests request : mFullRequests) {
+                        if (request.getType().toLowerCase().equals(filterPattern[0])) {
+                            tmpTypeList.add(request);
+                        }
+                    }
+                    List<Requests> tmpTypeCategoryList = new ArrayList<>();
+                    for (Requests request : tmpTypeList) {
+                        if (request.getCategory().toLowerCase().equals(filterPattern[1])) {
+                            tmpTypeCategoryList.add(request);
+                        }
+                    }
+
+                    for(Requests request: tmpTypeCategoryList){
+                        if(request.getTitle().toLowerCase().equals(filterPattern[2])||
+                                request.getDescription().toLowerCase().equals(filterPattern[2]))
+                            filteredList.add(request);
+                        }
+                    }
+                }
+
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            mRequestsList.clear();
+            mRequestsList.addAll((List)results.values);
+            mAdapter.notifyDataSetChanged();
+        }
+    };
 }

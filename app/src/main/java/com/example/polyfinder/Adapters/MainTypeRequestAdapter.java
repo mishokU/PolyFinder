@@ -3,6 +3,8 @@ package com.example.polyfinder.Adapters;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,10 +16,12 @@ import com.example.polyfinder.Items.Requests;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainTypeRequestAdapter extends RecyclerView.Adapter {
 
     private ArrayList<Requests> mRequests;
+
     private OnItemClickListener mOnItemClickListener;
     private View view;
 

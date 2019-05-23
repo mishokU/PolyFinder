@@ -31,8 +31,8 @@ public class SearchBottomFragment extends Fragment
     private RadioGroup mCategotyGroup;
     private ImageView mCloseFragment;
     private Button mFilterButton;
-    private String mRequestType;
-    private String mCategoryType;
+    private String mRequestType ="";
+    private String mCategoryType = "";
 
     private Transmitter transmitter;
 
@@ -85,13 +85,13 @@ public class SearchBottomFragment extends Fragment
         if(group == mRequestGroup) {
             switch (checkedId) {
                 case R.id.only_lost:
-                    mRequestType = "Only Lost";
+                    mRequestType = "lost";
                     break;
                 case R.id.all:
                     mRequestType = "All";
                     break;
                 case R.id.only_found:
-                    mRequestType = "Only Found";
+                    mRequestType = "found";
                     break;
             }
         }
