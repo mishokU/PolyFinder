@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.polyfinder.Adapters.ChatAdapter;
 import com.example.polyfinder.Items.Messages;
+import com.example.polyfinder.Items.Users;
 import com.example.polyfinder.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -57,6 +58,8 @@ public class ChatActivity extends AppCompatActivity {
     private FirebaseAuth auth;
 
     private String currentUser;
+    private String currentUserName;
+    private String currentUserImage;
 
     private String chatUser;
     private String chatImage;
@@ -79,6 +82,8 @@ public class ChatActivity extends AppCompatActivity {
         chatUsername = getIntent().getStringExtra("user_name");
         chatImage = getIntent().getStringExtra("user_image");
 
+        getOwnData();
+
 
         startChat();
         setOnActions();
@@ -87,6 +92,25 @@ public class ChatActivity extends AppCompatActivity {
         setToolbar();
         setRecyclerViewAdapter();
 
+    }
+
+    private void getOwnData() {
+        DatabaseReference ref = rootRef.child("Users").child(currentUser);
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Users user = dataSnapshot.getValue(Users.class);
+
+                currentUserName = user.getUsername();
+                currentUserImage = user.getImageUrl();
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void startChat() {
@@ -98,6 +122,11 @@ public class ChatActivity extends AppCompatActivity {
                     Map chatAddMap = new HashMap();
                     //chatAddMap.put("seen", false);
                     chatAddMap.put("timestamp", ServerValue.TIMESTAMP);
+                    chatAddMap.put("userId", currentUser);
+                    chatAddMap.put("userName", currentUserName);
+                    chatAddMap.put("userImage", currentUserImage);
+
+
 
                     Map chatMap = new HashMap();
                     //chatAddMap.put("seen", false);
