@@ -57,4 +57,5 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="remove_photo">Remove Photo</string>
     <string name="choose_photo">Choose photo</string>
     <string name="type">Type</string>
+    <string name="lost">Потеряно:</string>
 </resources>
