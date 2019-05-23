@@ -1,5 +1,6 @@
 package com.example.polyfinder.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -293,8 +294,10 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        Intent intent = new Intent(ChatActivity.this, DialogsActivity.class);
+        startActivity(intent);
         overridePendingTransition(0,0);
+        finish();
     }
 
     private void setRecyclerViewAdapter() {
