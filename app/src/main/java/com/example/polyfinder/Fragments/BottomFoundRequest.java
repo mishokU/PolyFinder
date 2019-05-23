@@ -39,7 +39,7 @@ public class BottomFoundRequest extends Fragment implements RadioGroup.OnChecked
     private RelativeLayout mTypePlace;
     private androidx.constraintlayout.widget.ConstraintLayout mTextPlace;
     private RadioGroup mRadioGroup;
-    private String mCategotyType;
+    private String mCategoryType;
     //private Image image;
 
     private boolean isOpen = true;
@@ -67,6 +67,7 @@ public class BottomFoundRequest extends Fragment implements RadioGroup.OnChecked
                 openTypeMenu();
             }
         });
+        mRadioGroup.setOnCheckedChangeListener(this);
     }
 
     private void openTypeMenu() {
@@ -152,19 +153,19 @@ public class BottomFoundRequest extends Fragment implements RadioGroup.OnChecked
         if(group == mRadioGroup){
             switch (checkedId) {
                 case R.id.documents:
-                    mCategotyType = "Documents";
+                    mCategoryType = "Documents";
                     break;
                 case R.id.electronics:
-                    mCategotyType = "Electronics";
+                    mCategoryType = "Electronics";
                     break;
                 case R.id.others:
-                    mCategotyType = "Others";
+                    mCategoryType = "Others";
                     break;
                 case R.id.eat:
-                    mCategotyType = "Eat";
+                    mCategoryType = "Eat";
                     break;
                 case R.id.clothing:
-                    mCategotyType = "Clothing";
+                    mCategoryType = "Clothing";
                     break;
             }
         }

@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ButterKnife.bind(this);
         mAuth = FirebaseAuth.getInstance();
         requestDatabase = FirebaseDatabase.getInstance().getReference().child("Requests");
-
+        bottomProfileRequestDialog = new BottomProfileRequestDialog();
 
         setRecyclerViewAdapter();
         setFragmentAdapters();
@@ -178,7 +178,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void openFullRequest(Requests requests) {
-        bottomProfileRequestDialog = new BottomProfileRequestDialog();
         Bundle bundle = new Bundle();
 
         bundle.putString("title", requests.getTitle());
@@ -289,7 +288,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void OnCloseSend(Boolean isClose) {
         if(isClose){
             mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-            bottomProfileRequestDialog.dismiss();
+            //bottomProfileRequestDialog.dismiss();
         }
     }
 

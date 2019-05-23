@@ -89,6 +89,7 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
                 openTypeMenu();
             }
         });
+
         
         mPublish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +97,7 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
                 publishRequest();
             }
         });
+      mRadioGroup.setOnCheckedChangeListener(this);
     }
 
     private void publishRequest() {
@@ -234,6 +236,7 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
             switch (checkedId) {
                 case R.id.documents:
                     mCategoryType = "Documents";
+                    Toast.makeText(getActivity(),"Documents",Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.electronics:
                     mCategoryType = "Electronics";
