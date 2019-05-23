@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@drawable/rounded_message"
+    android:background="@drawable/rounded_field"
     android:id="@+id/mainRelative"
     android:layout_height="310dp">
 

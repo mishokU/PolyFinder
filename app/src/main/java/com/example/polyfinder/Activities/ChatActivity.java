@@ -284,6 +284,19 @@ public class ChatActivity extends AppCompatActivity {
       //getSupportActionBar().setSubtitle("online");
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        overridePendingTransition(0,0);
+    }
+
     private void setRecyclerViewAdapter() {
         mLayoutManager = new LinearLayoutManager(this,RecyclerView.VERTICAL, false);
         mAdapter = new ChatAdapter(mChatItemList);
@@ -327,5 +340,7 @@ public class ChatActivity extends AppCompatActivity {
     private void chosePhoto() {
 
     }
+
+
 
 }
