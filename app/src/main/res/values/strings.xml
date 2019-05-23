@@ -56,4 +56,5 @@ Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fam
     <string name="take_photo">Take photo</string>
     <string name="remove_photo">Remove Photo</string>
     <string name="choose_photo">Choose photo</string>
+    <string name="type">Type</string>
 </resources>

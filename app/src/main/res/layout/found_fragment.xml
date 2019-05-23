@@ -29,7 +29,7 @@
         android:layout_marginBottom="10dp"
         android:layout_width="match_parent"
         android:background="@drawable/request_gradient"
-        android:layout_height="wrap_content">
+        android:layout_height="180dp">
 
         <EditText
             android:id="@+id/title"
@@ -50,22 +50,6 @@
             app:layout_constraintBottom_toTopOf="@+id/description"
             app:layout_constraintEnd_toStartOf="@+id/type"
             app:layout_constraintStart_toStartOf="@+id/description"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/type"
-            android:layout_width="65dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/bg_edit_text_request"
-            android:text="Тип"
-            android:textAlignment="gravity"
-            android:gravity="top|center_horizontal"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@+id/description"
-            app:layout_constraintEnd_toEndOf="@+id/description"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
@@ -105,6 +89,91 @@
             android:src="@drawable/image_placeholder"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RelativeLayout
+            android:id="@+id/type_place"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:visibility="invisible"
+            android:background="@drawable/request_type_gradient"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_gravity="center">
+
+                <RadioButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/type_selector"
+                    android:checked="false"
+                    android:layout_weight="1"
+                    android:button="@drawable/document_icon"/>
+
+                <RadioButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/type_selector"
+                    android:checked="false"
+                    android:layout_weight="1"
+                    android:button="@drawable/electronic_icon"/>
+
+                <RadioButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/type_selector"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:button="@drawable/eat_icon"/>
+
+                <RadioButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/type_selector"
+                    android:layout_weight="1"
+                    android:checked="false"
+                    android:button="@drawable/clothing_icon"/>
+
+                <RadioButton
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/type_selector"
+                    android:checked="false"
+                    android:button="@drawable/other_icno"/>
+
+            </RadioGroup>
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/type"
+            android:layout_width="65dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:background="@drawable/bg_edit_text_request"
+            android:text="@string/type"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@+id/description"
+            app:layout_constraintEnd_toEndOf="@+id/description"
             app:layout_constraintTop_toTopOf="parent" />
 
 
