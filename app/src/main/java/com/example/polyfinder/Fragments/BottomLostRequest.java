@@ -1,8 +1,12 @@
 package com.example.polyfinder.Fragments;
 
 import android.animation.Animator;
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,6 +15,7 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -25,24 +30,38 @@ import androidx.fragment.app.Fragment;
 import com.example.polyfinder.R;
 import com.example.polyfinder.Transmitter;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+
+import id.zelory.compressor.Compressor;
+
+import static android.app.Activity.RESULT_OK;
 
 
 public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedChangeListener {
 
+    private static final int GALLERY_PICK = 1;
     private View view;
     private RelativeLayout mainRelative;
     private TextView focus;
     private EditText mTitle;
     private Button mPublish;
     private EditText mDescription;
+    private ImageButton mRequestImage;
     private Transmitter transmitter;
     private ImageView mCloseFragment;
     private Button mType;
@@ -55,9 +74,14 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
 
     private DatabaseReference newRequestRef;
     private FirebaseAuth auth;
+    private StorageReference storageReference;
     private String currentUser;
 
     private String request_id;
+    private String request_image_url = "default";
+    private String request_thumb_image_url = "default";
+
+    private Context mContext;
 
 
     @Override
@@ -69,6 +93,7 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
         currentUser = auth.getCurrentUser().getUid();
 
         newRequestRef = FirebaseDatabase.getInstance().getReference().child("Requests");
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         findViews();
         setOnClicks();
@@ -97,22 +122,31 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
                 publishRequest();
             }
         });
+
+        mRequestImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setPhotoFromPhone();
+            }
+        });
+
+
       mRadioGroup.setOnCheckedChangeListener(this);
     }
 
     private void publishRequest() {
-        //final Intent intent = new Intent();
-        DatabaseReference user_message_push = newRequestRef.push();
+
+        //DatabaseReference user_message_push = newRequestRef.push();
 
 
-        request_id = user_message_push.getKey();
+        //request_id = user_message_push.getKey();
 
         String type = "lost";
 
         String title_txt = mTitle.getText().toString();
         String description_txt = mDescription.getText().toString();
-        String request_image_url = "default";
-        String request_thumb_image_url = "default";
+        //request_image_url = "default";
+        //request_thumb_image_url = "default";
 
         if(TextUtils.isEmpty(title_txt)||TextUtils.isEmpty(mCategoryType)||TextUtils.isEmpty(description_txt)) {
             Toast.makeText(getContext(), "Заполните Все Поля!", Toast.LENGTH_SHORT).show();
@@ -133,15 +167,6 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
-
-                        /*intent.putExtra("title",title.getText().toString());
-                        intent.putExtra("category",spinner.getSelectedItem().toString());
-                        intent.putExtra("description",description.getText().toString());
-                        intent.putExtra("fragment",switchButton);
-                        intent.putExtra("image", request_image_url);
-                        intent.putExtra("thumb_image", request_thumb_image_url);*/
-
-                        //returnToMainActivity();
                         transmitter.OnCloseSend(true);
 
                     }
@@ -160,6 +185,8 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
         mTextPlace = view.findViewById(R.id.text_place);
         mTypePlace = view.findViewById(R.id.type_place);
         mRadioGroup = view.findViewById(R.id.radio_group);
+        mRequestImage =view.findViewById(R.id.lost_request_image);
+
     }
 
     private void openTypeMenu() {
@@ -216,6 +243,7 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        mContext = context;
         if(context instanceof Transmitter) {
             transmitter = (Transmitter) context;
         } else{
@@ -250,6 +278,91 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
                 case R.id.clothing:
                     mCategoryType = "Clothing";
                     break;
+            }
+        }
+    }
+
+    private void setPhotoFromPhone() {
+        Intent gallery = new Intent();
+        gallery.setType("image/*");
+        gallery.setAction(Intent.ACTION_GET_CONTENT);
+
+        startActivityForResult(Intent.createChooser(gallery, "SELECT IMAGE"), GALLERY_PICK);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == GALLERY_PICK && resultCode == RESULT_OK) {
+            System.out.println("ERROR DOWNLOADING IMAGE");
+
+            Uri imageUri = data.getData();//READY TO CROP THE IMAGE
+
+            CropImage.activity(imageUri)
+                    .setAspectRatio(1,1)
+                    .start(mContext, this);
+        }
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+
+
+                Uri resultUri = result.getUri();
+
+                File thumb_file = new File(resultUri.getPath());
+
+                Bitmap thumb_bitmap = new Compressor(mContext)
+                        .setMaxHeight(100)
+                        .setMaxWidth(100)
+                        .compressToBitmap(thumb_file);
+
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                thumb_bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                final byte[] thumb_byte = baos.toByteArray();
+
+                DatabaseReference user_message_push = newRequestRef.child("requests").push();
+
+
+                request_id = user_message_push.getKey();
+
+                final StorageReference filepath = storageReference.child("Request_Images").child(request_id + ".jpg");
+                final StorageReference thumb_filepath = storageReference.child("Request_Images").child("thumbs").child(request_id + ".jpg");
+                filepath.putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(final UploadTask.TaskSnapshot taskSnapshot) {
+                        filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+
+                                final String download_link = uri.toString();
+                                request_image_url = download_link;
+
+                                UploadTask uploadTask = thumb_filepath.putBytes(thumb_byte);
+                                uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                        thumb_filepath.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                            @Override
+                                            public void onSuccess(Uri uri) {
+                                                String thumb_download_url = uri.toString();
+                                                request_thumb_image_url = thumb_download_url;
+
+                                                //image_load_progress.dismiss();
+                                                Toast.makeText(getActivity(), "Successfully Uploaded!", Toast.LENGTH_SHORT).show();
+                                                Picasso.get().load(request_image_url).placeholder(R.mipmap.ic_launcher).into(mRequestImage);
+
+                                            }
+                                        });
+                                    }
+                                });
+
+                            }
+                        });
+                    }
+                });
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Exception error = result.getError();
+                Toast.makeText(getActivity(), (CharSequence) error, Toast.LENGTH_SHORT).show();
             }
         }
     }
