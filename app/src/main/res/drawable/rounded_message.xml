@@ -3,5 +3,5 @@
     <solid android:color="#F2F2F2"/>
     <corners android:radius="25dp"/>
     <stroke android:color="@color/rounded_message_color" android:width="2dp"/>
-    <size android:height="35dp"/>
+    <size android:height="50dp"/>
 </shape>

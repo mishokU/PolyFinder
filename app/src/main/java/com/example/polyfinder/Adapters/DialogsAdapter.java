@@ -7,9 +7,11 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.polyfinder.Holders.FoundItemHolder;
 import com.example.polyfinder.Items.DialogItem;
 import com.example.polyfinder.Holders.DialogItemHolder;
 import com.example.polyfinder.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -43,6 +45,9 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogItemHolder> {
         //(DialogItemHolder) holder.getImageView().setImageBitmap();
         holder.getMessageView().setText(dialogItem.getLastMessage());
         holder.getUserNameView().setText(dialogItem.getUserName());
+
+        Picasso.get().load(dialogItem.getUserImage()).placeholder(R.mipmap.request_default)
+                .into(((DialogItemHolder) holder).getImageView());
     }
 
     @Override

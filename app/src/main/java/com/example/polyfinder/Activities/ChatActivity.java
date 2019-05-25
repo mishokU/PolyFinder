@@ -2,6 +2,7 @@ package com.example.polyfinder.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.polyfinder.Adapters.ChatAdapter;
 import com.example.polyfinder.Items.Messages;
@@ -49,6 +51,8 @@ public class ChatActivity extends AppCompatActivity {
     @BindView(R.id.photo_push) public ImageButton mPhotoPush;
     @BindView(R.id.toolbar) public Toolbar mToolbar;
     @BindView(R.id.input_field) public EditText message_text;
+
+    @BindView(R.id.swipe_refresh) public SwipeRefreshLayout mSwipeRefreshLayout;
 
     @BindView(R.id.recyclerview) public RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -92,7 +96,24 @@ public class ChatActivity extends AppCompatActivity {
         createList();
         setToolbar();
         setRecyclerViewAdapter();
+        setUpSwipeRefresh();
+    }
 
+    private void setUpSwipeRefresh() {
+        mSwipeRefreshLayout.setColorSchemeColors(getColor(R.color.request_start));
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        //loadRequests();
+                    }
+                },2000);
+            }
+        });
     }
 
     private void getOwnData() {

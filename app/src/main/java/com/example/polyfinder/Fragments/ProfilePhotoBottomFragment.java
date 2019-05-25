@@ -1,7 +1,11 @@
 package com.example.polyfinder.Fragments;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.polyfinder.R;
+import com.example.polyfinder.Transmitter;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class ProfilePhotoBottomFragment extends BottomSheetDialogFragment {
@@ -24,6 +29,10 @@ public class ProfilePhotoBottomFragment extends BottomSheetDialogFragment {
     private LinearLayout mTakePhoto;
     private LinearLayout mUploadPhoto;
     private LinearLayout mDeletePhoto;
+    private Transmitter transmitter;
+
+    private static final int CAMERA_REQUEST = 10;
+    private static final int GALLERY_REQUEST = 20;
 
     @Nullable
     @Override

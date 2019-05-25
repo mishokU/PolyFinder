@@ -2,6 +2,7 @@ package com.example.polyfinder.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.polyfinder.Adapters.DialogsAdapter;
 import com.example.polyfinder.Items.DialogItem;
@@ -32,6 +34,7 @@ public class DialogsActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar) public Toolbar toolbar;
     @BindView(R.id.recyclerview) public RecyclerView mRecyclerView;
+    @BindView(R.id.swipe_refresh) public SwipeRefreshLayout mSwipeRefreshLayout;
 
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
@@ -40,8 +43,6 @@ public class DialogsActivity extends AppCompatActivity {
     private DatabaseReference rootRef;
     private FirebaseAuth auth;
     private String currentUser;
-
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,15 +54,31 @@ public class DialogsActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         currentUser = auth.getCurrentUser().getUid();
 
-        //addItem("Misha", "Hi","fefwew");
         setToolbar();
         setDialogAdapter();
         loadDialogs();
+        setUpSwipeRefresh();
+    }
+
+    private void setUpSwipeRefresh() {
+        mSwipeRefreshLayout.setColorSchemeColors(getColor(R.color.request_start));
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        loadDialogs();
+                    }
+                },2000);
+            }
+        });
     }
 
     private void loadDialogs(){
         final DatabaseReference chatRef = FirebaseDatabase.getInstance().getReference();
-
 
         chatRef.child("Chats").addChildEventListener(new ChildEventListener() {
             @Override
@@ -81,8 +98,6 @@ public class DialogsActivity extends AppCompatActivity {
 
                             mDialogItems.add(new DialogItem(name, message, image, userId));
                             mAdapter.notifyDataSetChanged();
-                            System.out.println("LAST OOOOOOOOOO" + message + name + image + userId);
-
                         }
 
                         @Override
@@ -117,10 +132,6 @@ public class DialogsActivity extends AppCompatActivity {
 
             }
         });
-    }
-
-    private void addItem(String user_name,String  message, String image_url, String user_id){
-        mDialogItems.add(new DialogItem(user_name,message,image_url, user_id));
     }
 
     private void setDialogAdapter() {
