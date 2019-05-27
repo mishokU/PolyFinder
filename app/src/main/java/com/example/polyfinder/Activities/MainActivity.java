@@ -41,6 +41,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -57,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.request_sheet) public NestedScrollView mRequestSheet;
     @BindView(R.id.request_pager) public ViewPager mRequestViewPager;
     @BindView(R.id.swipe_refresh) public SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.nested_scroll_view) public NestedScrollView mNestedScrollView;
 
     @BindView(R.id.recyclerview) public RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -70,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseAuth mAuth;
     private DatabaseReference reference;
     private DatabaseReference requestDatabase;
+    private String oldestKey ="";
+    private String newKey ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +90,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setUpViews();
         seuUpSwipeRefresh();
         loadRequests();
+        //reloadRequests();
+    }
+
+    private void reloadRequests() {
+        mNestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    requestDatabase.orderByKey().endAt(oldestKey).limitToLast(5).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for(DataSnapshot child : dataSnapshot.getChildren()){
+                                oldestKey = child.getKey();
+                                Requests request = child.getValue(Requests.class);
+                                addItem(request);
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+        });
     }
 
     private void seuUpSwipeRefresh() {
@@ -98,7 +129,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(false);
-                        loadRequests();
                     }
                 },2000);
             }
@@ -126,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         requestDatabase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                oldestKey = dataSnapshot.getKey();
                 Requests request = dataSnapshot.getValue(Requests.class);
                 addItem(request);
                 mAdapter.notifyDataSetChanged();

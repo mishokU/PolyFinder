@@ -42,12 +42,12 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogItemHolder> {
     @Override
     public void onBindViewHolder(@NonNull DialogItemHolder holder, int position) {
         DialogItem dialogItem = mDialogItems.get(position);
-        //(DialogItemHolder) holder.getImageView().setImageBitmap();
+
         holder.getMessageView().setText(dialogItem.getLastMessage());
         holder.getUserNameView().setText(dialogItem.getUserName());
 
         Picasso.get().load(dialogItem.getUserImage()).placeholder(R.mipmap.request_default)
-                .into(((DialogItemHolder) holder).getImageView());
+                .into(holder.getImageView());
     }
 
     @Override

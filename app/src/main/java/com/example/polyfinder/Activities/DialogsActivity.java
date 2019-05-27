@@ -70,7 +70,7 @@ public class DialogsActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(false);
-                        loadDialogs();
+                        //loadDialogs();
                     }
                 },2000);
             }
