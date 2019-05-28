@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:cardElevation="0dp"
     >
 
     <LinearLayout
@@ -34,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                android:layout_marginStart="5dp"
+                android:layout_marginStart="7dp"
                 android:text="234352" />
 
         </LinearLayout>

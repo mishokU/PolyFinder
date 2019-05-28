@@ -34,6 +34,13 @@ public class SearchBottomFragment extends Fragment
     private String mRequestType ="";
     private String mCategoryType = "";
 
+    private RadioButton mDocuments;
+    private RadioButton mClothing;
+    private RadioButton mOthers;
+    private RadioButton mEat;
+    private RadioButton mElectronics;
+    private List<RadioButton> radioButtons;
+
     private Transmitter transmitter;
 
     @Nullable
@@ -42,13 +49,23 @@ public class SearchBottomFragment extends Fragment
         mView = inflater.inflate((R.layout.search_fragment),container,false);
 
         findAllViews();
+        findRadioButtons();
         setOnActions();
 
         return mView;
     }
 
-    private void findAllViews() {
+    private void findRadioButtons() {
+        radioButtons = new ArrayList<>();
 
+        radioButtons.add(mDocuments = mView.findViewById(R.id.documents));
+        radioButtons.add(mOthers = mView.findViewById(R.id.others));
+        radioButtons.add(mClothing = mView.findViewById(R.id.clothing));
+        radioButtons.add(mEat = mView.findViewById(R.id.eat));
+        radioButtons.add(mElectronics = mView.findViewById(R.id.electronics));
+    }
+
+    private void findAllViews() {
         mSearchText = mView.findViewById(R.id.search_text);
         mRequestGroup = mView.findViewById(R.id.request_group);
         mCategotyGroup = mView.findViewById(R.id.categoty_group);
@@ -87,9 +104,6 @@ public class SearchBottomFragment extends Fragment
                 case R.id.only_lost:
                     mRequestType = "lost";
                     break;
-                case R.id.all:
-                    mRequestType = "All";
-                    break;
                 case R.id.only_found:
                     mRequestType = "found";
                     break;
@@ -113,6 +127,14 @@ public class SearchBottomFragment extends Fragment
                 case R.id.clothing:
                     mCategoryType = "Clothing";
                     break;
+            }
+        }
+    }
+
+    private void resetCategoryButtons() {
+        for(RadioButton radioButton: radioButtons){
+            if(radioButton.isChecked()){
+                radioButton.setChecked(false);
             }
         }
     }

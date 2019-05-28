@@ -1,11 +1,15 @@
 package com.example.polyfinder.Fragments;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +25,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.polyfinder.Activities.ProfileActivity;
 import com.example.polyfinder.R;
 import com.example.polyfinder.Transmitter;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -60,6 +65,10 @@ public class ProfilePhotoBottomFragment extends BottomSheetDialogFragment {
     private StorageReference storageReference;
     private String currentUserId;
     private DatabaseReference reference;
+  
+    private static final int CAMERA_REQUEST = 10;
+    private static final int GALLERY_REQUEST = 20;
+
 
     @Nullable
     @Override

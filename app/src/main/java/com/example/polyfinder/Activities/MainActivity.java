@@ -3,6 +3,7 @@ package com.example.polyfinder.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.polyfinder.Adapters.BottomFragmentsAdapter;
@@ -39,6 +41,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.Nullable;
 
 import java.util.ArrayList;
@@ -54,6 +57,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.fab) public FloatingActionButton fab;
     @BindView(R.id.request_sheet) public NestedScrollView mRequestSheet;
     @BindView(R.id.request_pager) public ViewPager mRequestViewPager;
+    @BindView(R.id.swipe_refresh) public SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.nested_scroll_view) public NestedScrollView mNestedScrollView;
 
     @BindView(R.id.recyclerview) public RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -67,6 +72,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseAuth mAuth;
     private DatabaseReference reference;
     private DatabaseReference requestDatabase;
+    private String oldestKey ="";
+    private String newKey ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +88,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setFragmentAdapters();
         setAllSheets();
         setUpViews();
-        //createList();
+        seuUpSwipeRefresh();
         loadRequests();
-        //addItem(new Requests("lost","Hi","Hi lmaaaaaan", "dqwpokdqwkodpqkw"));
+        //reloadRequests();
+    }
+
+    private void reloadRequests() {
+        mNestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {
+                    requestDatabase.orderByKey().endAt(oldestKey).limitToLast(5).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for(DataSnapshot child : dataSnapshot.getChildren()){
+                                oldestKey = child.getKey();
+                                Requests request = child.getValue(Requests.class);
+                                addItem(request);
+                                mAdapter.notifyDataSetChanged();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    private void seuUpSwipeRefresh() {
+        mSwipeRefreshLayout.setColorSchemeColors(getColor(R.color.request_start));
+
+        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
+                },2000);
+            }
+        });
     }
 
     @Override
@@ -91,7 +140,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        //updateUI(currentUser);
         if( currentUser == null){
             sendToStart();
         }
@@ -108,11 +156,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         requestDatabase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                oldestKey = dataSnapshot.getKey();
                 Requests request = dataSnapshot.getValue(Requests.class);
-                //System.out.println(dataSnapshot.getKey() + "REQUEST FROM DATABASE");
-
-                    addItem(request);
-                    mAdapter.notifyDataSetChanged();
+                addItem(request);
+                mAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -164,7 +211,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onItemClick(int position) {
                 openFullRequest(mRequestsList.get(position));
-                //Toast.makeText(MainActivity.this,"Clicked: " + position,Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -272,6 +318,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onDataSend(String type, String category, String search) {
+        System.out.println("type: " + type + " " + category + " " + search);
         getFilter().filter(type + " " + category + " " + search);
         mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
     }
@@ -294,56 +341,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @Override
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Requests> filteredList = new ArrayList<>();
-            if(constraint == null || constraint.length() == 0 || constraint.equals("All")){
-                filteredList.addAll(mFullRequests);
-            } else {
-
-                String[] filterPattern = constraint.toString().toLowerCase().split(" ");
-
-                if (filterPattern.length == 1) {
-                    for (Requests request : mFullRequests) {
-                        if (request.getTitle().toLowerCase().equals(filterPattern[0]) ||
-                                request.getDescription().toLowerCase().equals(filterPattern[0]) ||
-                                request.getCategory().toLowerCase().equals(filterPattern[0]) ||
-                                request.getType().toLowerCase().equals(filterPattern[0])) {
-                            filteredList.add(request);
-                        }
-                    }
-                } else if (filterPattern.length == 2) {
-                    List<Requests> tmpTypeList = new ArrayList<>();
-                    for (Requests request : mFullRequests) {
-                        if (request.getType().toLowerCase().equals(filterPattern[0])) {
-                            tmpTypeList.add(request);
-                        }
-                    }
-
-                    for (Requests request : tmpTypeList) {
-                        if (request.getCategory().toLowerCase().equals(filterPattern[1])) {
-                            filteredList.add(request);
-                        }
-                    }
-                } else if(filterPattern.length == 3){
-                    List<Requests> tmpTypeList = new ArrayList<>();
-                    for (Requests request : mFullRequests) {
-                        if (request.getType().toLowerCase().equals(filterPattern[0])) {
-                            tmpTypeList.add(request);
-                        }
-                    }
-                    List<Requests> tmpTypeCategoryList = new ArrayList<>();
-                    for (Requests request : tmpTypeList) {
-                        if (request.getCategory().toLowerCase().equals(filterPattern[1])) {
-                            tmpTypeCategoryList.add(request);
-                        }
-                    }
-
-                    for(Requests request: tmpTypeCategoryList){
-                        if(request.getTitle().toLowerCase().equals(filterPattern[2])||
-                                request.getDescription().toLowerCase().equals(filterPattern[2]))
-                            filteredList.add(request);
-                        }
+            String[] filterPattern = constraint.toString().split(" ");
+            //If there are type category and search
+            if(filterPattern.length == 3) {
+                for (Requests request : mFullRequests) {
+                    if (request.getType().equals(filterPattern[0]) && request.getCategory().equals(filterPattern[1]) &&
+                            (request.getDescription().contains(filterPattern[2]) || request.getTitle().contains(filterPattern[2]))) {
+                        filteredList.add(request);
                     }
                 }
-
+            } else if(filterPattern.length == 2) {
+                System.out.println("filter 0: " + filterPattern[0]);
+                System.out.println("filter 1: " + filterPattern[1]);
+                for (Requests request : mFullRequests) {
+                    if (request.getType().equals(filterPattern[0]) && request.getCategory().equals(filterPattern[1])) {
+                        filteredList.add(request);
+                    }
+                }
+            } else if(filterPattern.length == 1) {
+                for (Requests request : mFullRequests) {
+                    if (request.getType().equals(filterPattern[0]) ||
+                       (request.getCategory().equals(filterPattern[0]) ||
+                       (request.getDescription().contains(filterPattern[0]) ||
+                       (request.getTitle().contains(filterPattern[0]))))) {
+                        filteredList.add(request);
+                    }
+                }
+            } else {
+                filteredList.addAll(mFullRequests);
+            }
             FilterResults results = new FilterResults();
             results.values = filteredList;
             return results;
