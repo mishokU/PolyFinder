@@ -23,16 +23,16 @@
     <string name="what_did_you_lose">Что вы потеряли?</string>
     <string name="do_you_found">Вы нашли предмет? Свайпните вправо</string>
     <string name="describe_lost">Опишите потерянный предмет\n(128 символов):</string>
-    <string name="only_lost">Only Lost</string>
-    <string name="only_found">Only Found</string>
+    <string name="only_lost">Потерянное</string>
+    <string name="only_found">Найденное</string>
     <string name="item_type">Type item</string>
-    <string name="communicate_in_chat">Communicate in chat</string>
+    <string name="communicate_in_chat">Открыть чат</string>
     <string name="telephone">+7854342344</string>
     <string name="user_name">Misha Usov</string>
     <string name="title">VLAD</string>
     <string name="logout">Выйти</string>
     <string name="settings">Настройки</string>
-    <string name="do_filter">do_filter</string>
+    <string name="do_filter">Сортировать</string>
     <string name="create_request_swipe_right">Create Request? Swipe right</string>
     <string name="input_message_field">Message...</string>
 
@@ -49,13 +49,13 @@ Maecenas mattis, erat et viverra euismod, neque diam porttitor tellus, in fringi
 
 Praesent tincidunt lorem sit amet mi consequat cursus. Interdum et malesuada fames ac ante ipsum primis in faucibus. Praesent vitae blandit sapien. Curabitur est sapien, lobortis sit amet facilisis vel, faucibus eu quam. Nam tempus libero at tellus tempor laoreet. Pellentesque quam lorem, tincidunt in molestie eget, dictum vel risus. Nunc gravida convallis mattis.
     </string>
-    <string name="your_requests">Your Requests</string>
-    <string name="swipe_on_left_or_right_n_to_delete_request">Swipe on left or right  to delete request</string>
+    <string name="your_requests">Ваши заявки</string>
+    <string name="swipe_on_left_or_right_n_to_delete_request">Смахните влево или вправо, чтобы удалить заявку</string>
 
-    <string name="upload_photo_from_gallery">Upload photo from gallery</string>
-    <string name="take_photo">Take photo</string>
-    <string name="remove_photo">Remove Photo</string>
-    <string name="choose_photo">Choose photo</string>
-    <string name="type">Type</string>
+    <string name="upload_photo_from_gallery">Загрузить фото из галереи</string>
+    <string name="take_photo">Фото с камеры</string>
+    <string name="remove_photo">Удалить фото</string>
+    <string name="choose_photo">Выбрать фото</string>
+    <string name="type">Тип</string>
     <string name="lost">Потеряно:</string>
 </resources>

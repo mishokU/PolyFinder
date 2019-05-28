@@ -119,7 +119,7 @@ public class ProfileActivity extends AppCompatActivity {
         startActivityForResult(intent, CAMERA);
     }
 
-    public void choosePhotoFromGallary() {
+    public void choosePhotoFromGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
@@ -153,12 +153,6 @@ public class ProfileActivity extends AppCompatActivity {
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);
             if (resultCode == RESULT_OK) {
-
-                /*image_load_progress = new ProgressDialog(ProfileActivity.this);
-                image_load_progress.setTitle("Загружаем изображение");
-                image_load_progress.setMessage("Подождите, пока мы обновляем вашу профильную фотографию");
-                image_load_progress.setCanceledOnTouchOutside(false);
-                image_load_progress.show();*/
 
                 Uri resultUri = result.getUri();
 

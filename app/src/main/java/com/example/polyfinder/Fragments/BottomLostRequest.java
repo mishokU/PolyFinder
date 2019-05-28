@@ -136,17 +136,11 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
 
     private void publishRequest() {
 
-        //DatabaseReference user_message_push = newRequestRef.push();
-
-
-        //request_id = user_message_push.getKey();
-
         String type = "lost";
 
         String title_txt = mTitle.getText().toString();
         String description_txt = mDescription.getText().toString();
-        //request_image_url = "default";
-        //request_thumb_image_url = "default";
+
 
         if(TextUtils.isEmpty(title_txt)||TextUtils.isEmpty(mCategoryType)||TextUtils.isEmpty(description_txt)) {
             Toast.makeText(getContext(), "Заполните Все Поля!", Toast.LENGTH_SHORT).show();
