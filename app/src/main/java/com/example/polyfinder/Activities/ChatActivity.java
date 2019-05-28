@@ -9,6 +9,8 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -35,6 +37,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,8 +54,8 @@ public class ChatActivity extends AppCompatActivity {
     @BindView(R.id.photo_push) public ImageButton mPhotoPush;
     @BindView(R.id.toolbar) public Toolbar mToolbar;
     @BindView(R.id.input_field) public EditText message_text;
-
-    @BindView(R.id.swipe_refresh) public SwipeRefreshLayout mSwipeRefreshLayout;
+    @BindView(R.id.profile_image) public ImageView profile_image;
+    @BindView(R.id.user_name) public TextView user_name;
 
     @BindView(R.id.recyclerview) public RecyclerView mRecyclerView;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -79,6 +82,19 @@ public class ChatActivity extends AppCompatActivity {
         setContentView(R.layout.chat_activity);
         ButterKnife.bind(this);
 
+        getFriedData();
+
+        getOwnData();
+
+        startChat();
+
+        createList();
+        setToolbar();
+        setRecyclerViewAdapter();
+        setOnActions();
+    }
+
+    private void getFriedData() {
         rootRef = FirebaseDatabase.getInstance().getReference();
         auth = FirebaseAuth.getInstance();
         currentUser = auth.getCurrentUser().getUid();
@@ -87,33 +103,8 @@ public class ChatActivity extends AppCompatActivity {
         chatUsername = getIntent().getStringExtra("user_name");
         chatImage = getIntent().getStringExtra("user_image");
 
-        getOwnData();
-
-
-        startChat();
-        setOnActions();
-
-        createList();
-        setToolbar();
-        setRecyclerViewAdapter();
-        setUpSwipeRefresh();
-    }
-
-    private void setUpSwipeRefresh() {
-        mSwipeRefreshLayout.setColorSchemeColors(getColor(R.color.request_start));
-
-        mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        mSwipeRefreshLayout.setRefreshing(false);
-                        //loadRequests();
-                    }
-                },2000);
-            }
-        });
+        Picasso.get().load(chatImage).placeholder(R.drawable.image_placeholder).into(profile_image);
+        user_name.setText(chatUsername);
     }
 
     private void getOwnData() {
@@ -125,7 +116,7 @@ public class ChatActivity extends AppCompatActivity {
 
                 currentUserName = user.getUsername();
                 currentUserImage = user.getImageUrl();
-
+                Picasso.get().load(user.getImageUrl()).placeholder(R.drawable.image_placeholder);
             }
 
             @Override
@@ -208,7 +199,6 @@ public class ChatActivity extends AppCompatActivity {
                 System.out.println(mChatItemList.size());
                 mAdapter.notifyDataSetChanged();
                 mRecyclerView.scrollToPosition(mChatItemList.size() - 1);
-
             }
 
             @Override
@@ -302,7 +292,6 @@ public class ChatActivity extends AppCompatActivity {
     private void setToolbar() {
       setSupportActionBar(mToolbar);
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-      getSupportActionBar().setTitle(chatUsername);
       //getSupportActionBar().setSubtitle("online");
     }
 
@@ -323,9 +312,11 @@ public class ChatActivity extends AppCompatActivity {
 
     private void setRecyclerViewAdapter() {
         mLayoutManager = new LinearLayoutManager(this,RecyclerView.VERTICAL, false);
+        ((LinearLayoutManager) mLayoutManager).setStackFromEnd(true);
         mAdapter = new ChatAdapter(mChatItemList);
 
         mRecyclerView.setHasFixedSize(true);
+
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
@@ -350,6 +341,13 @@ public class ChatActivity extends AppCompatActivity {
             public void onClick(View v) {
                 sendMessage();
                 message_text.setText("");
+            }
+        });
+
+        message_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRecyclerView.scrollToPosition(mChatItemList.size());
             }
         });
 

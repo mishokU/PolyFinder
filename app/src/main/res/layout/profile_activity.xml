@@ -45,6 +45,7 @@
                     android:layout_width="180dp"
                     android:layout_height="180dp"
                     android:id="@+id/profile_image"
+                    android:layout_marginStart="35dp"
                     app:border_width="2dp"
                     app:border_color="@color/bg_edit_text"
                     android:src="@drawable/quila2" />
@@ -93,22 +94,16 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_height="60dp"
+                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:layout_gravity="bottom"
                 android:layout_below="@id/user_photo"
                 android:orientation="vertical">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/your_requests"
-                    android:layout_gravity="center_horizontal"/>
-
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_marginTop="5dp"
                     android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
                     android:layout_height="wrap_content">
 
                     <ImageView
@@ -153,7 +148,6 @@
             android:id="@+id/recyclerview"
             android:layout_height="wrap_content"
             tools:listitem="@layout/lost_item">
-
 
         </androidx.recyclerview.widget.RecyclerView>
 

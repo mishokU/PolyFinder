@@ -59,8 +59,6 @@ public class BottomProfileRequestDialog extends BottomSheetDialogFragment {
 
         currentUser = FirebaseAuth.getInstance().getUid();
 
-
-
         findAllViews();
         setOnClick();
         getDataFromView();

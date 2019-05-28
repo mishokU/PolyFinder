@@ -86,6 +86,7 @@ public class DialogsActivity extends AppCompatActivity {
                 if(dataSnapshot.hasChild(currentUser)){
                     final String chat_user_id = dataSnapshot.getRef().getKey();
 
+                    assert chat_user_id != null;
                     chatRef.child("Chats").child(currentUser).child(chat_user_id).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -95,8 +96,9 @@ public class DialogsActivity extends AppCompatActivity {
                             String image = chat.getUserImage();
                             String name = chat.getUserName();
                             String userId = chat.getUserId();
+                            String time = chat.getTime();
 
-                            mDialogItems.add(new DialogItem(name, message, image, userId));
+                            mDialogItems.add(new DialogItem(name, message,time, image, userId));
                             mAdapter.notifyDataSetChanged();
                         }
 
@@ -105,8 +107,6 @@ public class DialogsActivity extends AppCompatActivity {
 
                         }
                     });
-
-
 
                 }
 
@@ -165,7 +165,7 @@ public class DialogsActivity extends AppCompatActivity {
     private void setToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Back to main tape");
+        getSupportActionBar().setTitle("На главную ленту");
     }
 
     @Override

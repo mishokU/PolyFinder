@@ -322,7 +322,7 @@ public class ProfileActivity extends AppCompatActivity {
     private void setUpToolbar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Back to main tape");
+        getSupportActionBar().setTitle("На главную ленту");
     }
 
     @Override

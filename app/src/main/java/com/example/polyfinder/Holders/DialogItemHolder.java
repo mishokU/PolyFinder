@@ -12,7 +12,7 @@ import com.example.polyfinder.R;
 
 public class DialogItemHolder extends RecyclerView.ViewHolder {
 
-    private ImageView mImageView;
+    private de.hdodenhof.circleimageview.CircleImageView mImageView;
     private TextView mUserName;
     private TextView mMessage;
 

@@ -42,6 +42,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import id.zelory.compressor.Compressor;
 
@@ -84,7 +85,7 @@ public class BottomFoundRequest extends Fragment implements RadioGroup.OnChecked
 
         auth = FirebaseAuth.getInstance();
 
-        currentUser = auth.getCurrentUser().getUid();
+        currentUser = Objects.requireNonNull(auth.getCurrentUser()).getUid();
 
         newRequestRef = FirebaseDatabase.getInstance().getReference().child("Requests");
         storageReference = FirebaseStorage.getInstance().getReference();
@@ -173,21 +174,8 @@ public class BottomFoundRequest extends Fragment implements RadioGroup.OnChecked
         }
     }
 
-    private void openTypeMenu() {
-        if(isOpen) {
-            int x = (int) mType.getX() + mType.getWidth() / 2;
-            int y = (int) mType.getY() + mType.getHeight() / 2;
-
-            int startRadius = 0;
-            int endRadius = mTextPlace.getWidth();
-
-            Animator anim = ViewAnimationUtils.createCircularReveal(mTypePlace, x, y, startRadius, endRadius);
-            anim.setDuration(1000);
-            mTypePlace.setVisibility(View.VISIBLE);
-            anim.start();
-
-            isOpen = false;
-        } else {
+    private void closeTypeMenu() {
+        if(!isOpen) {
 
             int x = (int) mType.getX() + mType.getWidth() / 2;
             int y = (int) mType.getY() + mType.getHeight() / 2;
@@ -206,6 +194,7 @@ public class BottomFoundRequest extends Fragment implements RadioGroup.OnChecked
                 @Override
                 public void onAnimationEnd(Animator animator) {
                     mTypePlace.setVisibility(View.INVISIBLE);
+                    mType.setVisibility(View.VISIBLE);
                 }
 
                 @Override
@@ -220,6 +209,24 @@ public class BottomFoundRequest extends Fragment implements RadioGroup.OnChecked
             });
             anim.start();
             isOpen = true;
+        }
+    }
+
+    public void openTypeMenu(){
+        if(isOpen) {
+            int x = (int) mType.getX() + mType.getWidth() / 2;
+            int y = (int) mType.getY() + mType.getHeight() / 2;
+
+            int startRadius = 0;
+            int endRadius = mTextPlace.getWidth();
+
+            Animator anim = ViewAnimationUtils.createCircularReveal(mTypePlace, x, y, startRadius, endRadius);
+            anim.setDuration(1000);
+            mTypePlace.setVisibility(View.VISIBLE);
+            mType.setVisibility(View.INVISIBLE);
+            anim.start();
+
+            isOpen = false;
         }
     }
 
@@ -273,6 +280,7 @@ public class BottomFoundRequest extends Fragment implements RadioGroup.OnChecked
                     mCategoryType = "Clothing";
                     break;
             }
+            closeTypeMenu();
         }
     }
 

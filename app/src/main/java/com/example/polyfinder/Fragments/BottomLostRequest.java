@@ -183,21 +183,8 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
 
     }
 
-    private void openTypeMenu() {
-        if(isOpen) {
-            int x = (int) mType.getX() + mType.getWidth() / 2;
-            int y = (int) mType.getY() + mType.getHeight() / 2;
-
-            int startRadius = 0;
-            int endRadius = mTextPlace.getWidth();
-
-            Animator anim = ViewAnimationUtils.createCircularReveal(mTypePlace, x, y, startRadius, endRadius);
-            anim.setDuration(1000);
-            mTypePlace.setVisibility(View.VISIBLE);
-            anim.start();
-
-            isOpen = false;
-        } else {
+    private void closeTypeMenu() {
+        if(!isOpen) {
 
             int x = (int) mType.getX() + mType.getWidth() / 2;
             int y = (int) mType.getY() + mType.getHeight() / 2;
@@ -216,6 +203,7 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
                 @Override
                 public void onAnimationEnd(Animator animator) {
                     mTypePlace.setVisibility(View.INVISIBLE);
+                    mType.setVisibility(View.VISIBLE);
                 }
 
                 @Override
@@ -230,6 +218,24 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
             });
             anim.start();
             isOpen = true;
+        }
+    }
+
+    public void openTypeMenu(){
+        if(isOpen) {
+            int x = (int) mType.getX() + mType.getWidth() / 2;
+            int y = (int) mType.getY() + mType.getHeight() / 2;
+
+            int startRadius = 0;
+            int endRadius = mTextPlace.getWidth();
+
+            Animator anim = ViewAnimationUtils.createCircularReveal(mTypePlace, x, y, startRadius, endRadius);
+            anim.setDuration(1000);
+            mTypePlace.setVisibility(View.VISIBLE);
+            mType.setVisibility(View.INVISIBLE);
+            anim.start();
+
+            isOpen = false;
         }
     }
 
@@ -273,6 +279,7 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
                     mCategoryType = "Clothing";
                     break;
             }
+            closeTypeMenu();
         }
     }
 

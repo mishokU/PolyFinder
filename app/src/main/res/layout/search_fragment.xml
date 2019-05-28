@@ -82,6 +82,8 @@
         android:layout_height="50dp"
         android:layout_marginStart="15dp"
         android:layout_marginEnd="15sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
 
@@ -109,8 +111,8 @@
             android:layout_margin="5dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:background="@drawable/type_selector"
             android:button="@drawable/document_icon"
+            android:background="@drawable/type_selector"
             android:checked="false" />
 
         <View
@@ -207,7 +209,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
         android:layout_below="@id/publish"
         android:layout_height="40dp">
 

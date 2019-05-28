@@ -6,6 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/RegStyle"
     android:background="@drawable/politech_bg">
 
     <LinearLayout
@@ -32,11 +33,11 @@
         android:layout_marginEnd="50dp"
         android:background="@drawable/bg_edit_text"
         android:hint="@string/email"
-        android:paddingStart="25dp"
+        android:paddingStart="22dp"
         android:paddingEnd="10dp"
         android:textColor="@color/edit_text"
         android:textColorHint="@color/hint_color"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:autofillHints="@string/email"
         android:inputType="textEmailAddress" />
 
@@ -58,6 +59,7 @@
             android:layout_gravity="center"
             android:layout_marginStart="15dp"
             android:id="@+id/sign_in_password"
+            android:layout_marginBottom="10dp"
             android:background="@null"
             android:textColor="@color/white"
             android:hint="@string/write_password"
@@ -79,14 +81,15 @@
         android:textColor="@color/white"
         android:text="@string/sign_in" />
 
-    </LinearLayout>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
-        android:layout_marginBottom="50dp">
+        android:layout_marginBottom="16dp">
 
         <Button
             android:id="@+id/forget_password"
@@ -109,6 +112,8 @@
             android:text="@string/create_account" />
 
     </RelativeLayout>
+
+    </LinearLayout>
 
 
 </LinearLayout>

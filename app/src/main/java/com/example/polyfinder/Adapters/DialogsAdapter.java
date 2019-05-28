@@ -45,9 +45,8 @@ public class DialogsAdapter extends RecyclerView.Adapter<DialogItemHolder> {
 
         holder.getMessageView().setText(dialogItem.getLastMessage());
         holder.getUserNameView().setText(dialogItem.getUserName());
-
-        Picasso.get().load(dialogItem.getUserImage()).placeholder(R.mipmap.request_default)
-                .into(holder.getImageView());
+        System.out.println("user image: " + dialogItem.getUserImage());
+        Picasso.get().load(dialogItem.getUserImage()).placeholder(R.mipmap.request_default).into(holder.getImageView());
     }
 
     @Override
