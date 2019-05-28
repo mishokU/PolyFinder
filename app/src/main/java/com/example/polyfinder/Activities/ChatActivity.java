@@ -292,6 +292,7 @@ public class ChatActivity extends AppCompatActivity {
     private void setToolbar() {
       setSupportActionBar(mToolbar);
       getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      getSupportActionBar().setTitle("");
       //getSupportActionBar().setSubtitle("online");
     }
 

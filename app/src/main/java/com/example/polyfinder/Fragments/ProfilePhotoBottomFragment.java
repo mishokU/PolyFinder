@@ -176,7 +176,6 @@ public class ProfilePhotoBottomFragment extends BottomSheetDialogFragment {
                                 Map updateMap = new HashMap<>();
                                 updateMap.put("imageUrl", download_link);
 
-
                                 reference.updateChildren(updateMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {

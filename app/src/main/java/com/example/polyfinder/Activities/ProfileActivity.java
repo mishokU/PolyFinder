@@ -107,9 +107,9 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //ProfilePhotoBottomFragment profilePhotoBottomFragment = new ProfilePhotoBottomFragment();
-                //profilePhotoBottomFragment.show(getSupportFragmentManager(),"settings");
-                setPhotoFromPhone();
+                ProfilePhotoBottomFragment profilePhotoBottomFragment = new ProfilePhotoBottomFragment();
+                profilePhotoBottomFragment.show(getSupportFragmentManager(),"settings");
+                //setPhotoFromPhone();
             }
         });
     }
@@ -182,7 +182,6 @@ public class ProfileActivity extends AppCompatActivity {
 
                                 Map updateMap = new HashMap<>();
                                 updateMap.put("imageUrl", download_link);
-
 
                                 reference.updateChildren(updateMap).addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
