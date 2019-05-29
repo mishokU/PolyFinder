@@ -33,7 +33,7 @@
     <string name="logout">Выйти</string>
     <string name="settings">Настройки</string>
     <string name="do_filter">Сортировать</string>
-    <string name="create_request_swipe_right">Create Request? Swipe right</string>
+    <string name="create_request_swipe_right">Создать заявку? Смахните вправо</string>
     <string name="input_message_field">Message...</string>
 
     <dimen name="image_width">120dp</dimen>

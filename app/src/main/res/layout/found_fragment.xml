@@ -201,7 +201,6 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_below="@id/publish"
-        android:layout_marginTop="10dp"
         android:layout_height="40dp">
 
         <ImageView

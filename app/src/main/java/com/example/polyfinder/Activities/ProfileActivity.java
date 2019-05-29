@@ -1,5 +1,6 @@
 package com.example.polyfinder.Activities;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,12 +10,6 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +26,8 @@ import com.example.polyfinder.Adapters.MainTypeRequestAdapter;
 import com.example.polyfinder.Fragments.ProfilePhotoBottomFragment;
 import com.example.polyfinder.Items.Requests;
 import com.example.polyfinder.R;
+import com.example.polyfinder.Transmitter;
+import com.example.polyfinder.TransmitterPhoto;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -49,6 +46,7 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -66,7 +64,7 @@ import static android.media.MediaRecorder.VideoSource.CAMERA;
 
 
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity implements TransmitterPhoto {
 
     private static final int GALLERY_PICK = 1;
     @BindView(R.id.toolbar) public Toolbar toolbar;
@@ -107,9 +105,9 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                ProfilePhotoBottomFragment profilePhotoBottomFragment = new ProfilePhotoBottomFragment();
-                profilePhotoBottomFragment.show(getSupportFragmentManager(),"settings");
-                //setPhotoFromPhone();
+                //ProfilePhotoBottomFragment profilePhotoBottomFragment = new ProfilePhotoBottomFragment();
+                //profilePhotoBottomFragment.show(getSupportFragmentManager(),"settings");
+                setPhotoFromPhone();
             }
         });
     }
@@ -131,23 +129,26 @@ public class ProfileActivity extends AppCompatActivity {
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, GALLERY_REQUEST);*/
 
-        Intent gallery = new Intent();
+        /*Intent gallery = new Intent();
         gallery.setType("image/*");
         gallery.setAction(Intent.ACTION_GET_CONTENT);
 
-        startActivityForResult(Intent.createChooser(gallery, "SELECT IMAGE"), GALLERY_PICK);
+        startActivityForResult(Intent.createChooser(gallery, "SELECT IMAGE"), GALLERY_PICK);*/
+        CropImage.startPickImageActivity(this);
+    }
+
+    public void cropImage(Uri imageUri){
+        CropImage.activity(imageUri)
+                .setAspectRatio(1,1)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .start(this);
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == GALLERY_PICK && resultCode == RESULT_OK) {
-            System.out.println("ERROR DOWNLOADING IMAGE");
-
-            Uri imageUri = data.getData();//READY TO CROP THE IMAGE
-
-            CropImage.activity(imageUri)
-                    .setAspectRatio(1,1)
-                    .start(this);
+        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            Uri imageUri = CropImage.getPickImageResultUri(this,data);//READY TO CROP THE IMAGE
+            cropImage(imageUri);
         }
 
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -369,5 +370,11 @@ public class ProfileActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return super.onSupportNavigateUp();
+    }
+
+
+    @Override
+    public void onImageURLSend(String url) {
+        Picasso.get().load(url).placeholder(R.drawable.image_placeholder).into(profileImage);
     }
 }

@@ -1,31 +1,24 @@
 package com.example.polyfinder.Fragments;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 
-import com.example.polyfinder.Activities.ProfileActivity;
 import com.example.polyfinder.R;
 import com.example.polyfinder.Transmitter;
 
+import com.example.polyfinder.TransmitterPhoto;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -48,6 +41,7 @@ import id.zelory.compressor.Compressor;
 
 import static android.app.Activity.RESULT_OK;
 
+
 public class ProfilePhotoBottomFragment extends BottomSheetDialogFragment {
 
     private static final int GALLERY_PICK = 1;
@@ -56,7 +50,7 @@ public class ProfilePhotoBottomFragment extends BottomSheetDialogFragment {
     private LinearLayout mTakePhoto;
     private LinearLayout mUploadPhoto;
     private LinearLayout mDeletePhoto;
-    private Transmitter transmitter;
+    private TransmitterPhoto transmitterPhoto;
 
     private Context mContext;
 
@@ -69,6 +63,8 @@ public class ProfilePhotoBottomFragment extends BottomSheetDialogFragment {
     private static final int CAMERA_REQUEST = 10;
     private static final int GALLERY_REQUEST = 20;
 
+    private String request_image_url = "default";
+    private String request_thumb_image_url = "default";
 
     @Nullable
     @Override
@@ -76,6 +72,14 @@ public class ProfilePhotoBottomFragment extends BottomSheetDialogFragment {
         view = inflater.inflate(R.layout.profile_photo_fragment, container,false);
 
 
+        getFirebaseData();
+        findViews();
+        setOnClicks();
+
+        return view;
+    }
+
+    private void getFirebaseData() {
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         assert currentUser != null;
         currentUserId = currentUser.getUid();
@@ -83,11 +87,6 @@ public class ProfilePhotoBottomFragment extends BottomSheetDialogFragment {
         requestDatabase = FirebaseDatabase.getInstance().getReference().child("Requests");
 
         storageReference = FirebaseStorage.getInstance().getReference();
-
-        findViews();
-        setOnClicks();
-
-        return view;
     }
 
     private void setOnClicks() {
@@ -101,7 +100,6 @@ public class ProfilePhotoBottomFragment extends BottomSheetDialogFragment {
         mUploadPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(getActivity(),"Upload photo", Toast.LENGTH_SHORT).show();
                 setPhotoFromPhone();
             }
         });
@@ -123,23 +121,27 @@ public class ProfilePhotoBottomFragment extends BottomSheetDialogFragment {
 
     private void setPhotoFromPhone() {
 
-        Intent gallery = new Intent();
+        /*Intent gallery = new Intent();
         gallery.setType("image/*");
         gallery.setAction(Intent.ACTION_GET_CONTENT);
-
-        startActivityForResult(Intent.createChooser(gallery, "SELECT IMAGE"), GALLERY_PICK);
+        System.out.println("ooooooooooooooooooooooooooooooo");
+        startActivityForResult(Intent.createChooser(gallery, "SELECT IMAGE"), GALLERY_PICK);*/
+        CropImage.startPickImageActivity(getContext(),this);
     }
+
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == GALLERY_PICK && resultCode == RESULT_OK) {
+        if (requestCode == GALLERY_PICK) {
             System.out.println("ERROR DOWNLOADING IMAGE");
-
+            System.out.println("ooooooooooooooooooooooooooooooo");
             Uri imageUri = data.getData();//READY TO CROP THE IMAGE
 
             CropImage.activity(imageUri)
                     .setAspectRatio(1,1)
-                    .start(mContext,this);
+                    .start(getContext(),this);
+            System.out.println("ooooooooooooooooooooooooooooooo");
         }
 
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
@@ -153,7 +155,8 @@ public class ProfilePhotoBottomFragment extends BottomSheetDialogFragment {
 
                 String currentUid = currentUser.getUid();
 
-                Bitmap thumb_bitmap = new Compressor(mContext)
+
+                Bitmap thumb_bitmap = new Compressor(getContext())
                         .setMaxHeight(100)
                         .setMaxWidth(100)
                         .compressToBitmap(thumb_file);
@@ -172,6 +175,7 @@ public class ProfilePhotoBottomFragment extends BottomSheetDialogFragment {
                             public void onSuccess(Uri uri) {
 
                                 final String download_link = uri.toString();
+                                request_image_url = download_link;
 
                                 Map updateMap = new HashMap<>();
                                 updateMap.put("imageUrl", download_link);
@@ -182,7 +186,7 @@ public class ProfilePhotoBottomFragment extends BottomSheetDialogFragment {
                                         if(task.isSuccessful()){
                                             //image_load_progress.dismiss();
                                             Toast.makeText(getContext(), "Successfully Uploaded!", Toast.LENGTH_SHORT).show();
-
+                                            transmitterPhoto.onImageURLSend(request_image_url);
                                         }
                                     }
                                 });
@@ -193,8 +197,26 @@ public class ProfilePhotoBottomFragment extends BottomSheetDialogFragment {
                 });
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
-                Toast.makeText(mContext, (CharSequence) error, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), (CharSequence) error, Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        mContext = context;
+        if(context instanceof TransmitterPhoto) {
+            transmitterPhoto = (TransmitterPhoto) context;
+        } else{
+            throw new RuntimeException(context.toString()
+                    + "must implement Transmitter");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        transmitterPhoto = null;
     }
 }
