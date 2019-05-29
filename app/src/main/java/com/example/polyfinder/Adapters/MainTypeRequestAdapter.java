@@ -77,6 +77,10 @@ public class MainTypeRequestAdapter extends RecyclerView.Adapter {
         }
     }
 
+    public void restoreItem(Requests restoreRequest, int restoreIndex){
+        mRequests.add(restoreIndex,restoreRequest);
+    }
+
     @Override
     public int getItemCount() {
         return mRequests.size();

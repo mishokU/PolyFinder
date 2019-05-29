@@ -126,9 +126,8 @@ public class BottomFoundRequest extends Fragment implements RadioGroup.OnChecked
     }
 
     private void publishRequest() {
-        //final Intent intent = new Intent();
-        DatabaseReference user_message_push = newRequestRef.push();
 
+        DatabaseReference user_message_push = newRequestRef.push();
 
         request_id = user_message_push.getKey();
 

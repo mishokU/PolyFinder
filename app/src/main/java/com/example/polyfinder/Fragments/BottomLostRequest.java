@@ -136,6 +136,10 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
 
     private void publishRequest() {
 
+        DatabaseReference user_message_push = newRequestRef.push();
+
+        request_id = user_message_push.getKey();
+
         String type = "lost";
 
         String title_txt = mTitle.getText().toString();

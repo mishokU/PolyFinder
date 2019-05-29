@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +27,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.polyfinder.Adapters.DialogsAdapter;
 import com.example.polyfinder.Adapters.MainTypeRequestAdapter;
 import com.example.polyfinder.Fragments.ProfilePhotoBottomFragment;
+import com.example.polyfinder.Holders.FoundItemHolder;
+import com.example.polyfinder.Holders.LostItemHolder;
 import com.example.polyfinder.Items.Requests;
 import com.example.polyfinder.R;
 import com.example.polyfinder.Transmitter;
@@ -32,6 +37,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
@@ -73,10 +79,13 @@ public class ProfileActivity extends AppCompatActivity implements TransmitterPho
     @BindView(R.id.telephone) public TextView userPhoneNumber;
     @BindView(R.id.profile_image) public CircleImageView profileImage;
     @BindView(R.id.change_photo) public de.hdodenhof.circleimageview.CircleImageView change_photo_button;
+    @BindView(R.id.root) public CoordinatorLayout mRoot;
 
     private ArrayList<Requests> mRequestItems = new ArrayList<>();
     private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerView.Adapter mAdapter;
+    private MainTypeRequestAdapter mAdapter;
+    private Requests mRestoreItem;
+    private int mRestoreIndex;
 
     private DatabaseReference reference;
     private DatabaseReference requestDatabase;
@@ -147,6 +156,11 @@ public class ProfileActivity extends AppCompatActivity implements TransmitterPho
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            Uri imageUri = CropImage.getPickImageResultUri(this,data);//READY TO CROP THE IMAGE
+            cropImage(imageUri);
+        }
+
+        if (requestCode == CropImage.CAMERA_CAPTURE_PERMISSIONS_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             Uri imageUri = CropImage.getPickImageResultUri(this,data);//READY TO CROP THE IMAGE
             cropImage(imageUri);
         }
@@ -304,8 +318,7 @@ public class ProfileActivity extends AppCompatActivity implements TransmitterPho
     }
 
     private void setUpTouchListener() {
-        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
-                ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
                 return false;
@@ -313,11 +326,51 @@ public class ProfileActivity extends AppCompatActivity implements TransmitterPho
 
             @Override
             public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
-                mRequestItems.remove(((MainTypeRequestAdapter)mAdapter).getRequestAt(viewHolder.getAdapterPosition()));
+                mRestoreItem = mAdapter.getRequestAt(viewHolder.getAdapterPosition());
+                mRestoreIndex = viewHolder.getAdapterPosition();
+                mRequestItems.remove(mAdapter.getRequestAt(viewHolder.getAdapterPosition()));
+
+                showSnackBar();
                 mAdapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+            }
+
+            @Override
+            public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
+                View view;
+                if(viewHolder instanceof FoundItemHolder){
+                    view = ((FoundItemHolder) viewHolder).foreground;
+                } else {
+                    view = ((LostItemHolder) viewHolder).foreground;
+                }
+                getDefaultUIUtil().clearView(view);
+            }
+
+            @Override
+            public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+                View view;
+                if(viewHolder instanceof FoundItemHolder){
+                    view = ((FoundItemHolder) viewHolder).foreground;
+                } else {
+                    view = ((LostItemHolder) viewHolder).foreground;
+                }
+                getDefaultUIUtil().onDraw(c,recyclerView,view,dX,dY,actionState,isCurrentlyActive);
             }
         }).attachToRecyclerView(recyclerView);
     }
+
+    private void showSnackBar() {
+        Snackbar snackbar = Snackbar.make(mRoot,"remove item", Snackbar.LENGTH_SHORT);
+        snackbar.setAction("Undo", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAdapter.restoreItem(mRestoreItem,mRestoreIndex);
+                mAdapter.notifyItemInserted(mRestoreIndex);
+            }
+        });
+        snackbar.setActionTextColor(Color.WHITE);
+        snackbar.show();
+    }
+
 
     private void setUpToolbar() {
         setSupportActionBar(toolbar);

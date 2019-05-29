@@ -121,17 +121,29 @@ public class ProfilePhotoBottomFragment extends BottomSheetDialogFragment {
 
     private void setPhotoFromPhone() {
 
-        /*Intent gallery = new Intent();
+        Intent gallery = new Intent();
         gallery.setType("image/*");
         gallery.setAction(Intent.ACTION_GET_CONTENT);
         System.out.println("ooooooooooooooooooooooooooooooo");
-        startActivityForResult(Intent.createChooser(gallery, "SELECT IMAGE"), GALLERY_PICK);*/
-        CropImage.startPickImageActivity(getContext(),this);
+        startActivityForResult(Intent.createChooser(gallery, "SELECT IMAGE"), GALLERY_PICK);
     }
 
-
-
     @Override
+    public void startActivityForResult(Intent intent, int requestCode, @Nullable Bundle options) {
+        if (requestCode == GALLERY_PICK) {
+            System.out.println("ERROR DOWNLOADING IMAGE");
+            System.out.println("ooooooooooooooooooooooooooooooo");
+            Uri imageUri = intent.getData();//READY TO CROP THE IMAGE
+
+            CropImage.activity(imageUri)
+                    .setAspectRatio(1,1)
+                    .start(getContext(),this);
+            System.out.println("ooooooooooooooooooooooooooooooo");
+        }
+        super.startActivityForResult(intent, requestCode, options);
+    }
+
+    /*@Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == GALLERY_PICK) {
             System.out.println("ERROR DOWNLOADING IMAGE");
@@ -200,7 +212,7 @@ public class ProfilePhotoBottomFragment extends BottomSheetDialogFragment {
                 Toast.makeText(getContext(), (CharSequence) error, Toast.LENGTH_SHORT).show();
             }
         }
-    }
+    }*/
 
     @Override
     public void onAttach(Context context) {

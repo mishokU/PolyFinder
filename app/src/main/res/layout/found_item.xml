@@ -11,8 +11,25 @@
     app:cardCornerRadius="20dp">
 
     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:id="@+id/background"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:id="@+id/right_trash_can"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_action_remove_photo" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
+        android:id="@+id/foreground"
         android:background="@drawable/rounded_item"
         android:layout_height="120dp"
         android:weightSum="2">
