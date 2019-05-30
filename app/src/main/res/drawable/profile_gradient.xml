@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:opacity="opaque">
     <item>
         <shape>
             <gradient
@@ -21,7 +22,8 @@
             android:angle="180"
             android:type="linear"
             android:endColor="@color/profile_gradient_center"/>
-            <corners android:topRightRadius="20dp"/>
+            <corners android:topRightRadius="20dp"
+                android:topLeftRadius="20dp"/>
         </shape>
     </item>
     <item>
@@ -31,6 +33,8 @@
                 android:angle="225"
                 android:type="linear"
                 android:endColor="@color/profile_gradient_center"/>
+            <corners android:topRightRadius="20dp"
+                android:topLeftRadius="20dp"/>
         </shape>
     </item>
 </layer-list>

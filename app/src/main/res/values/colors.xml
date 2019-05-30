@@ -20,7 +20,7 @@
     <color name="swipe">#333333</color>
 
     <color name="profile_gradient_start">#2BC3B4</color>
-    <color name="profile_horizontal_gradient_center">#B32BC3B4</color>
+    <color name="profile_horizontal_gradient_center">#FA2BC3B4</color>
     <color name="profile_gradient_center">#052BC3B4</color>
     <color name="profile_gradient_end">#CCB9E7DB</color>
 

@@ -144,6 +144,8 @@ public class BottomProfileRequestDialog extends BottomSheetDialogFragment {
         request_image = view.findViewById(R.id.request_photo);
         user_photo = view.findViewById(R.id.user_photo);
         mCloseFragment = view.findViewById(R.id.close_fragment);
+
+        request_image.setClipToOutline(true);
     }
 
     private void setOnClick() {
