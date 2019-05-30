@@ -1,12 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <gradient
-        android:startColor="@color/profile_gradient_start"
-        android:centerColor="@color/profile_gradient_center"
-        android:type="linear"
-        android:angle="90"
-        android:endColor="@color/profile_gradient_end"/>
-    <corners android:topRightRadius="20dp"
-        android:topLeftRadius="20dp"/>
-
-</shape>
+<layer-list
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <gradient
+                android:startColor="@color/profile_gradient_start"
+                android:centerColor="@color/profile_gradient_center"
+                android:type="linear"
+                android:angle="90"
+                android:endColor="@color/profile_gradient_end"/>
+            <corners android:topRightRadius="20dp"
+                android:topLeftRadius="20dp"/>
+        </shape>
+    </item>
+    <item>
+        <shape>
+        <gradient
+            android:startColor="@color/profile_gradient_start"
+            android:centerColor="@color/profile_horizontal_gradient_center"
+            android:angle="180"
+            android:type="linear"
+            android:endColor="@color/profile_gradient_center"/>
+            <corners android:topRightRadius="20dp"/>
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <gradient
+                android:startColor="@color/profile_gradient_end"
+                android:angle="225"
+                android:type="linear"
+                android:endColor="@color/profile_gradient_center"/>
+        </shape>
+    </item>
+</layer-list>

@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
+    android:theme="@style/AppBottomSheetDialogTheme"
     android:background="@drawable/rounded_field"
     android:layout_height="250dp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
+
+    <ImageView
         android:id="@+id/request_photo"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_margin="15dp"
-        app:border_width="5dp"
-        app:border_color="@color/request_end" />
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:scaleType="centerCrop"
+        android:background="@drawable/rounded_field"
+        android:src="@drawable/quila2" />
 
     <View
         android:layout_height="250dp"
@@ -36,13 +39,13 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/request_photo"
         android:textAlignment="viewEnd"
         android:maxLines="1"
         android:maxLength="25"
         android:layout_alignParentEnd="true"
         android:text="@string/title"
         android:textSize="22sp"
+        android:textColor="@color/bg_edit_text"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="15dp"/>
 
@@ -51,8 +54,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/title"
-        android:layout_toEndOf="@id/request_photo"
         android:layout_alignParentEnd="true"
+        android:maxWidth="200dp"
         android:layout_marginEnd="15dp"
         android:textAlignment="viewEnd"
         android:layout_above="@id/user_data"
