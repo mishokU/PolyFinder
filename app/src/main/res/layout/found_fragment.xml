@@ -91,6 +91,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ProgressBar
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/progressbar"
+            android:progressDrawable="@color/colorPrimaryDark"
+            app:layout_constraintBottom_toBottomOf="@+id/found_request_image"
+            app:layout_constraintEnd_toEndOf="@+id/type_place"
+            app:layout_constraintHorizontal_bias="0.14"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@+id/found_request_image"
+            app:layout_constraintTop_toTopOf="@+id/found_request_image" />
+
         <RelativeLayout
             android:id="@+id/type_place"
             android:layout_width="match_parent"

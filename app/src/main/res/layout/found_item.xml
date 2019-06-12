@@ -73,7 +73,7 @@
                 android:id="@+id/description"
                 android:text="hi"
                 android:maxLength="30"
-                android:maxLines="3"
+                android:maxLines="2"
                 android:layout_gravity="end"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
@@ -83,6 +83,16 @@
             </androidx.appcompat.widget.AppCompatTextView>
 
         </LinearLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+            android:id="@+id/request_image_user_photo"
+            android:background="@drawable/profile_request_icon" />
 
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -69,6 +70,7 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
     private ConstraintLayout mTextPlace;
     private RadioGroup mRadioGroup;
     private String mCategoryType;
+    private ProgressBar progressBar;
 
     private boolean isOpen = true;
 
@@ -184,7 +186,7 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
         mTypePlace = view.findViewById(R.id.type_place);
         mRadioGroup = view.findViewById(R.id.radio_group);
         mRequestImage =view.findViewById(R.id.lost_request_image);
-
+        progressBar = view.findViewById(R.id.progressbar);
     }
 
     private void closeTypeMenu() {
@@ -268,21 +270,26 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
             switch (checkedId) {
                 case R.id.documents:
                     mCategoryType = "Documents";
-                    Toast.makeText(getActivity(),"Documents",Toast.LENGTH_SHORT).show();
+                    mType.setBackgroundResource(R.drawable.document_icon);
                     break;
                 case R.id.electronics:
                     mCategoryType = "Electronics";
+                    mType.setBackgroundResource(R.drawable.electronic_icon);
                     break;
                 case R.id.others:
                     mCategoryType = "Others";
+                    mType.setBackgroundResource(R.drawable.other_icno);
                     break;
                 case R.id.eat:
                     mCategoryType = "Eat";
+                    mType.setBackgroundResource(R.drawable.eat_icon);
                     break;
                 case R.id.clothing:
                     mCategoryType = "Clothing";
+                    mType.setBackgroundResource(R.drawable.clothing_icon);
                     break;
             }
+            mType.setText("");
             closeTypeMenu();
         }
     }
@@ -299,7 +306,7 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == GALLERY_PICK && resultCode == RESULT_OK) {
             System.out.println("ERROR DOWNLOADING IMAGE");
-
+            progressBar.setVisibility(View.VISIBLE);
             Uri imageUri = data.getData();//READY TO CROP THE IMAGE
 
             CropImage.activity(imageUri)
@@ -355,7 +362,7 @@ public class BottomLostRequest extends Fragment implements RadioGroup.OnCheckedC
                                                 //image_load_progress.dismiss();
                                                 Toast.makeText(getActivity(), "Successfully Uploaded!", Toast.LENGTH_SHORT).show();
                                                 Picasso.get().load(request_image_url).placeholder(R.mipmap.ic_launcher).into(mRequestImage);
-
+                                                progressBar.setVisibility(View.INVISIBLE);
                                             }
                                         });
                                     }

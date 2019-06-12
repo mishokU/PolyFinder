@@ -29,7 +29,6 @@ public class Users {
         this.status = status;
     }
 
-
     public String getUsername(){
         return username;
     }

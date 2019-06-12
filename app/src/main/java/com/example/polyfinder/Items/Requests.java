@@ -28,14 +28,6 @@ public class Requests {
 
     }
 
-    public Requests(String type, String title, String description, String image){
-        this.type = type;
-        this.title = title;
-        this.description = description;
-        this.image = image;
-
-    }
-
     public String getType(){
         return type;
     }

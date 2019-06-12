@@ -31,6 +31,18 @@
         android:background="@drawable/request_gradient"
         android:layout_height="180dp">
 
+        <ProgressBar
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:id="@+id/progressbar"
+            android:progressDrawable="@color/colorPrimaryDark"
+            app:layout_constraintBottom_toBottomOf="@+id/lost_request_image"
+            app:layout_constraintEnd_toEndOf="@+id/type_place"
+            app:layout_constraintHorizontal_bias="0.14"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="@+id/lost_request_image"
+            app:layout_constraintTop_toTopOf="@+id/lost_request_image" />
+
         <EditText
             android:id="@+id/title"
             android:layout_width="0dp"

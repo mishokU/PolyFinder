@@ -16,6 +16,7 @@ public class FoundItemHolder extends RecyclerView.ViewHolder {
     private TextView title;
     private TextView description;
     private ImageView image;
+    private ImageView user_image;
     public ImageView right_trash_can;
     public RelativeLayout foreground;
 
@@ -27,6 +28,7 @@ public class FoundItemHolder extends RecyclerView.ViewHolder {
         image = itemView.findViewById(R.id.found_image);
         right_trash_can = itemView.findViewById(R.id.right_trash_can);
         foreground = itemView.findViewById(R.id.foreground);
+        user_image = itemView.findViewById(R.id.request_image_user_photo);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +43,8 @@ public class FoundItemHolder extends RecyclerView.ViewHolder {
         });
     }
 
+    public ImageView getMiniUserImage(){return user_image;}
+
     public TextView getTitleView(){
         return title;
     }
@@ -49,6 +53,5 @@ public class FoundItemHolder extends RecyclerView.ViewHolder {
         return description;
     }
 
-    public ImageView getImage() { return image;
-    }
+    public ImageView getImage() { return image; }
 }

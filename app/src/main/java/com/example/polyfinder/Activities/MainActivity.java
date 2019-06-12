@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void run() {
                         mSwipeRefreshLayout.setRefreshing(false);
+                        //reloadRequests();
                     }
                 },2000);
             }

@@ -17,6 +17,7 @@ public class LostItemHolder extends RecyclerView.ViewHolder {
     private TextView title;
     private TextView description;
     private ImageView image;
+    private ImageView user_image;
     public ImageView left_trash_can;
     public RelativeLayout foreground;
 
@@ -28,6 +29,7 @@ public class LostItemHolder extends RecyclerView.ViewHolder {
         image = itemView.findViewById(R.id.lost_image);
         left_trash_can = itemView.findViewById(R.id.left_trash_can);
         foreground = itemView.findViewById(R.id.foreground);
+        user_image = itemView.findViewById(R.id.request_image_user_photo);
 
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +43,8 @@ public class LostItemHolder extends RecyclerView.ViewHolder {
             }
         });
     }
+
+    public ImageView getMiniUserPhoto(){return user_image;}
 
     public TextView getTitleView(){
         return title;
